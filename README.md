@@ -1,6 +1,6 @@
 # Vortrag + Demo Code
 
-![Logo](http://johanneshoppe.github.io/FromKnockout2Angular/Slides/images/logo.png)
+![Logo](Slides/images/logo.png)
 
 ## Von Knockout zu AngularJS
 
