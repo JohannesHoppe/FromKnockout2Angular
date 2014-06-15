@@ -2,7 +2,7 @@
     //enforceDefine: true,
     baseUrl: "js",
     paths: {
-        'jquery': 'jquery-2.0.3',
+        'jquery': 'jquery/jquery-1.11.1',
     },
     shim: {
 

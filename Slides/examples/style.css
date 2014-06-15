@@ -1,0 +1,70 @@
+﻿body.example {
+  color: #666666;
+  font-family: Verdana, Arial, Helvetica, Sans-serif;
+  font-size: 80%;
+  line-height: 1.5;
+}
+
+/* 
+ * shadow effect which only works in modern browsers 
+ */
+.drop_shadow {
+    background-image: 
+        url(images/drop_shadow/bottom_right.png),
+        url(images/drop_shadow/top_right.png),
+        url(images/drop_shadow/bottom_left.png),
+        url(images/drop_shadow/top_left.png);
+
+    background-position: 
+        bottom right,
+        top right,
+        bottom left,
+        top left;
+
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+
+    width: 360px;
+    padding: 0 15px 15px 15px;
+    margin: 10px;
+}
+
+.drop_shadow div {
+    min-height: 100px;
+    background-color: #F0F0A6;
+    padding: 10px;
+}
+
+
+@font-face {
+    font-family: 'BuxtonSketch';
+    src: url('fonts/BuxtonSketch.eot');
+    src: local('fonts/BuxtonSketch'), url('fonts/BuxtonSketch.woff') format('woff'), url('fonts/BuxtonSketch.ttf') format('truetype');
+}
+
+.drop_shadow,
+ form {
+    font-size: 13px;
+    line-height: 19px;
+}
+
+.reveal .drop_shadow,
+.reveal  form {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.drop_shadow h1 {
+    margin: 0 0 4px 0;    
+    color: #5A5A5A;
+    font-family: 'BuxtonSketch' !important;
+    font-size: 26px !important;
+}
+
+form label:before {
+    content: '\A';
+    white-space: pre;
+}
+
+form label:first-child:before {
+    content: '';
+}

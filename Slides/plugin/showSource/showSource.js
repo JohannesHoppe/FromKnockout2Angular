@@ -50,7 +50,12 @@
             httpRequest(url).done(function(data) {
 
                 var snippet = extractSnippet(data).trim();
-                code.innerHTML = snippet;
+
+                // will not execute embedded scripts
+                //code.innerHTML = snippet;
+
+                // WILL execute embedded scripts
+                $(code).html(snippet);
             });
         });
     };
