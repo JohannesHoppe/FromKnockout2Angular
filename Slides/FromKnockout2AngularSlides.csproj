@@ -45,10 +45,10 @@
     <Content Include="examples\01_bindings\knockout.html" />
     <Content Include="examples\01_bindings\jQuery.html" />
     <Content Include="examples\style.css" />
-    <Content Include="examples\images\drop_shadow\bottom_left.png" />
-    <Content Include="examples\images\drop_shadow\bottom_right.png" />
-    <Content Include="examples\images\drop_shadow\top_left.png" />
-    <Content Include="examples\images\drop_shadow\top_right.png" />
+    <Content Include="examples\images\sticky_note\bottom_left.png" />
+    <Content Include="examples\images\sticky_note\bottom_right.png" />
+    <Content Include="examples\images\sticky_note\top_left.png" />
+    <Content Include="examples\images\sticky_note\top_right.png" />
     <Content Include="images\icon_apple.svg">
       <SubType>Designer</SubType>
     </Content>
