@@ -23,9 +23,9 @@
 
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 
-    width: 360px;
-    padding: 0 15px 15px 15px;
-    margin: 10px;
+    width: 360px !important;
+    padding: 0 15px 15px 15px !important;
+    margin: 20px auto 10px auto !important;
 }
 
 .drop_shadow div {
@@ -42,15 +42,9 @@
 }
 
 .drop_shadow,
- form {
+.form_example {
     font-size: 13px;
     line-height: 19px;
-}
-
-.reveal .drop_shadow,
-.reveal  form {
-    font-size: 20px;
-    line-height: 30px;
 }
 
 .drop_shadow h1 {
@@ -60,11 +54,34 @@
     font-size: 26px !important;
 }
 
-form label:before {
-    content: '\A';
-    white-space: pre;
+.form_example {
+    width: 290px;
 }
 
-form label:first-child:before {
-    content: '';
+.form_example label {
+    display: block;
+    float: left;
+    width: 110px;
+}
+
+.form_example input {
+    display: block;
+    float: left;
+    width: 160px;
+}
+
+.reveal .form_example {
+    margin-top: 40px;
+    width: 370px;
+}
+
+.reveal .drop_shadow,
+.reveal .form_example,
+.reveal .form_example input {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.reveal .drop_shadow h1 {
+    font-size: 42px !important;
 }

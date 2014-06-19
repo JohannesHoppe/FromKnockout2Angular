@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Form Example</title>   
+    
+    <link href="../style.css" rel="stylesheet" />
+    <script src="../../js/jquery/jquery-1.11.1.js"></script>
+</head>
+<body class="example">
+         
+<!--START-->
+    
+<script>
+    $(function ($) {
+
+        $('#Title').change(function () {
+            var title = $(this).val();
+            $('#jQuery_output h1').text(title);
+        });
+
+        $('#Message').change(function () {
+            var message = $(this).val();
+            $('#jQuery_output p').text(message);
+        });
+
+    });
+</script>
+
+<form class="form_example">
+    <label for="Title">Title</label>
+    <input id="Title">
+        
+    <label for="Message">Message</label>
+    <input id="Message">
+</form>
+
+<div id="jQuery_output" class="drop_shadow">
+    <div>
+        <h1></h1>
+        <p></p>
+    </div>
+</div>
+<!--STOP-->
+
+</body>
+</html>
