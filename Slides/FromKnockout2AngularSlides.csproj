@@ -40,21 +40,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="examples\fonts\BuxtonSketch.css" />
-    <Content Include="examples\form\jQuery.html" />
+    <Content Include="examples\01_bindings\knockout.html" />
+    <Content Include="examples\01_bindings\jQuery.html" />
     <Content Include="examples\style.css" />
-    <Content Include="examples\images\ajax-loader.gif" />
-    <Content Include="examples\images\bg.jpg" />
     <Content Include="examples\images\drop_shadow\bottom_left.png" />
     <Content Include="examples\images\drop_shadow\bottom_right.png" />
     <Content Include="examples\images\drop_shadow\top_left.png" />
     <Content Include="examples\images\drop_shadow\top_right.png" />
-    <Content Include="examples\images\favicon.ico" />
-    <Content Include="examples\images\logo.png" />
-    <Content Include="examples\images\mainbg.jpg" />
-    <Content Include="examples\images\notifications\error.png" />
-    <Content Include="examples\images\notifications\info.png" />
-    <Content Include="examples\images\notifications\success.png" />
-    <Content Include="examples\images\notifications\warning.png" />
+    <Content Include="images\codingHorror.png" />
+    <Content Include="images\ipad-hand.png" />
+    <Content Include="images\ipad-screen.gif" />
+    <Content Include="images\iphone-hand.png" />
+    <Content Include="images\iphone-screen.gif" />
+    <Content Include="images\pear.svg" />
     <Content Include="js\angular-1.3.0\angular-animate.js" />
     <Content Include="js\angular-1.3.0\angular-animate.min.js" />
     <Content Include="js\angular-1.3.0\angular-cookies.js" />
@@ -527,9 +525,6 @@
     <Content Include="js\jquery\jquery-1.11.1.min.js" />
     <Content Include="js\knockout-3.1.0\knockout.debug.js" />
     <Content Include="js\knockout-3.1.0\knockout.js" />
-    <Content Include="images\cordova_bootstrap_knockout.png" />
-    <Content Include="images\cordova_jQueryMobile.png" />
-    <Content Include="images\cordova_KendoUiMobile.png" />
     <Content Include="index.html" />
     <Content Include="images\icon_calendar.png" />
     <Content Include="images\icon_repeat.png" />
