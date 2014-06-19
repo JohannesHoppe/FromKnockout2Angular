@@ -23,15 +23,17 @@
             $('#jQuery_output p').text(message);
         });
 
+        $('#Title').change();
+        $('#Message').change();
     });
 </script>
 
 <form class="form_example">
     <label for="Title">Title</label>
-    <input id="Title">
+    <input id="Title" value="Remeber">
         
     <label for="Message">Message</label>
-    <input id="Message">
+    <input id="Message" value="the milk">
 </form>
 
 <div id="jQuery_output" class="drop_shadow">
