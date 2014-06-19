@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="examples\01_bindings\angular.html" />
+    <Content Include="examples\02_templates\knockout.html" />
     <Content Include="examples\fonts\BuxtonSketch.css" />
     <Content Include="examples\01_bindings\knockout.html" />
     <Content Include="examples\01_bindings\jQuery.html" />
@@ -48,9 +49,13 @@
     <Content Include="examples\images\drop_shadow\bottom_right.png" />
     <Content Include="examples\images\drop_shadow\top_left.png" />
     <Content Include="examples\images\drop_shadow\top_right.png" />
-    <Content Include="images\icon_apple.svg" />
+    <Content Include="images\icon_apple.svg">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="images\icon_codingHorror.png" />
-    <Content Include="images\icon_pear.svg" />
+    <Content Include="images\icon_pear.svg">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="images\ipad-hand.png" />
     <Content Include="images\ipad-screen.gif" />
     <Content Include="images\iphone-hand.png" />

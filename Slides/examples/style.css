@@ -8,12 +8,12 @@
 /* 
  * shadow effect which only works in modern browsers 
  */
-.drop_shadow {
+.sticky_note {
     background-image: 
-        url(images/drop_shadow/bottom_right.png),
-        url(images/drop_shadow/top_right.png),
-        url(images/drop_shadow/bottom_left.png),
-        url(images/drop_shadow/top_left.png);
+        url(images/sticky_note/bottom_right.png),
+        url(images/sticky_note/top_right.png),
+        url(images/sticky_note/bottom_left.png),
+        url(images/sticky_note/top_left.png);
 
     background-position: 
         bottom right,
@@ -28,7 +28,7 @@
     margin: 20px auto 10px auto !important;
 }
 
-.drop_shadow div {
+.sticky_note div {
     min-height: 100px;
     background-color: #F0F0A6;
     padding: 10px;
@@ -41,13 +41,13 @@
     src: local('fonts/BuxtonSketch'), url('fonts/BuxtonSketch.woff') format('woff'), url('fonts/BuxtonSketch.ttf') format('truetype');
 }
 
-.drop_shadow,
+.sticky_note,
 .form_example {
     font-size: 13px;
     line-height: 19px;
 }
 
-.drop_shadow h1 {
+.sticky_note h1 {
     margin: 0 0 4px 0;    
     color: #5A5A5A;
     font-family: 'BuxtonSketch' !important;
@@ -75,13 +75,13 @@
     width: 370px;
 }
 
-.reveal .drop_shadow,
+.reveal .sticky_note,
 .reveal .form_example,
 .reveal .form_example input {
     font-size: 20px;
     line-height: 30px;
 }
 
-.reveal .drop_shadow h1 {
+.reveal .sticky_note h1 {
     font-size: 42px !important;
 }
