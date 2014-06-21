@@ -12,9 +12,9 @@
 <a name="einleitung"></a>
 ## 1. Einleitung
 
-Das JavaScript-Framework Knockout.js konzentriert sich klar auf eine Aufgabe. Diese ist das Bereitstellen einer MVVM-Engine. Zusätzliche Funktionalitäten wie modularer Code oder clientseitiges Routing müssen durch weitere Bibliotheken hinzugefügt werden. Gerade für größere SinglePage Anwendungen sind zahlreiche weitere JavaScript-Libraries nach und nach hinzuzufügen. Wer auf Knockout.js als Technologie für eine SPA (Single-Page Application) gesetzt hat, kann durch den Zechnologie-Zoo mitunter etwas ernüchtert sein. 
+Das JavaScript-Framework [Knockout.js](http://knockoutjs.com/) konzentriert sich klar auf eine Aufgabe. Diese ist das Bereitstellen einer MVVM-Engine. Zusätzliche Funktionalitäten wie modularer Code oder clientseitiges Routing müssen durch weitere Bibliotheken hinzugefügt werden. Gerade für größere SinglePage Anwendungen sind zahlreiche weitere JavaScript-Libraries nach und nach hinzuzufügen. Wer auf Knockout.js als Technologie für eine SPA (Single-Page Application) gesetzt hat, kann durch den Zechnologie-Zoo mitunter etwas ernüchtert sein. 
 
-Im Kontrast hierzu steht AngularJS. Dieses Framework bietet einen viel größeren Funktionsumfang. Es sind viele Funktionalitäten vorhanden, die für eine homogene SPA-Architektur verwendet werden können. AngularJS schickt sich an "Marktführer" für SPAs zu werden und diese Position dank der Unterstützung von Google auch zu behaupten.
+Im Kontrast hierzu steht [AngularJS](https://angularjs.org/). Dieses Framework bietet einen viel größeren Funktionsumfang. Es sind viele Funktionalitäten vorhanden, die für eine homogene SPA-Architektur verwendet werden können. AngularJS schickt sich an "Marktführer" für SPAs zu werden und diese Position dank der Unterstützung von Google auch zu behaupten.
 
 In dieser Session (und mit dem Ihnen hier vorliegenden Handout) werden Knockout und AngularJS miteinander vergleichen. Anhand **ausgewählter Schwerpunkte**  sollen jeweilige Vorteile und Schwächen herausgearbeitet und mit Code-Beispielen belegt werden. Johannes Hoppe beleuchtet hierbei stets die Frage ob und wie ein Umstieg von Knockout auf Angular JS sinnvoll und machbar ist bzw. wäre. 
 
@@ -27,25 +27,143 @@ Unter der Prämisse, das wir uns im Kontext einer **MVW** Anwendung bewegen, ist
 
 1. MVVM
 2. Templating bzw. wiederverwendbarer Code
-2. Routing
-3. Modularer Code
+3. Routing
+4. Modularer Code
+
+![Äpfel mit Birnen](images/apples_and_pears.png)
+
+Es bleibt ein kleines Dilemma. Knockout.js und AngularJS sind eigentlich nicht miteinander vergleichbar. Wie Äpfel und Birnen haben beide Frameworks einen unterschiedlichen Schwerpunkt. AngularJS hat den Anspruch ein universales JavaScript-Framework für SPAs zu sein, Knockout hingegeben beschränkt sich hingegen darauf, eine MVVM Engine zur Verfügung zu stellen. Für eine ebenbürtigen Vergleich sollte man z.B. eher [Durandal](http://durandaljs.com/) und AngularJS miteinander messen.   
 
 <a name="MVVM"></a>
-## 2. Schwerpunkte
+## 3. MVVM
 
+Das folgende Beispiel basiert auf einem einfachem Formular, welches bei Wertänderung den Inhalt eines gelben Notizzettels verändert:
 
+![Screenshot](images/remember_the_milk.png)
+
+In den Zeiten vor MVVM waren einfache UI-Themen zuweilen sehr komplex. Folgender Sourcode demonstriert, wie z.B. nur mit jQuery der Notizzettel verarbeitet werden muss.
 
 ```html
-<b>
+<script>
+    $(function ($) {
+
+        $('#Title').change(function () {
+            var title = $(this).val();
+            $('#jQuery_output h1').text(title);
+        });
+
+        $('#Message').change(function () {
+            var message = $(this).val();
+            $('#jQuery_output p').text(message);
+        });
+
+        $('#Title').change();
+        $('#Message').change();
+    });
+</script>
+
+<form>
+    <label for="Title">Title</label>
+    <input id="Title" value="Remeber">
+        
+    <label for="Message">Message</label>
+    <input id="Message" value="the milk">
+</form>
+
+<div id="jQuery_output" class="sticky_note">
+    <div>
+        <h1></h1>
+        <p></p>
+    </div>
+</div>
+
 ```
+
+Man sieht, dass auf die einzelnen HTML-Elemente umständlich zugriffen werden muss. Eine deutliche Vereinfachung bietet hier MVVM. 
+ 
+Die Hauptaufgabe eine MVVM Engine besteht darin den **View** (welcher in unserem Fall reines HTML ist) möglichst elegant mit dem so genannten **ViewModel** zu verbinden. Das **ViewModel** kann man als einen speziellen Controller sehen. Er stellt einerseits Daten der Geschäftslogik bzw. des Models zu Verfügung und stellt weiterhin auch Methoden für diese dar. Durch die Zwischenschicht "ViewModel", werden View und Model voneinander getrennt. Es ist nun irrelevant wo und wie das tatsächliche Model existiert. Das ViewModel "versteckt es" und stellt eine standardisierte Sicht darauf her. Häufig wird es der Fall sein, das das eigentliche Model nur auf dem Server wirklich greifbar ist. Hierzu leitet dann das ViewModel alle Operationen per **AJAX** an den Server weiter.
+
+Diese Verbindung zwischen View und ViewModel nennt sich **Binding**, diese geht für gewöhnlich in beide Richtungen. Ändert sich das ViewModel, so wird der View aktualisiert. Ändert sich der Wert eines Interaktions-Elements (z.b. hier eines Input-Felds), so wird das ViewModel ebenso geändert. Genau dies geschieht in folgendem Beispiel, welches mit Knockout.js umgesetzt ist.
+
+```html
+<script>
+    $(function () {
+
+        var ViewModel = function () {
+            this.Title = ko.observable('Remember');
+            this.Message = ko.observable('the milk');
+        };
+
+        var viewmodel = new ViewModel();
+        ko.applyBindings(viewmodel);
+
+    });
+</script>
+
+<form>
+    <label for="Title">Title</label>
+    <input id="Title" data-bind="value: Title">    
+        
+    <label for="Message">Message</label>
+    <input id="Message" data-bind="value: Message">
+</form>
+         
+<div class="sticky_note">
+    <div>
+        <h1 data-bind="text: Title"></h1>
+        <p data-bind="text: Message"></p>
+    </div>
+</div>
+```
+
+Bei Knockout verwendet man für die Two-Way-Bindings Objekte vom Typ `Observable`. Diese implementieren (wie der Name bereits suggeriert), das [Observer Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript). Entsprechend dazu werden die Bindungs auf HTML-Elemente mit dem data-Attribut `data-bind` spezifiziert.
+
+In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist jedoch die Tatsache, das noch weniger JavaScript geschrieben werden muss. Dies wird durch so genannte "[Directives](https://docs.angularjs.org/guide/directive)" / Direktiven ermöglicht. Direktiven sind Marker im HTML, welche dem HTML compiler (`$compile`) von AngularJS Instruktionen geben. Es wird dadurch eine sehr deklarative Beschreibung der Applikation möglich.
+
+```html
+<body class="example" ng-app>
+
+<form ng-init="model = { Title: 'Remember', 'Message': 'the milk' }">
+    <label for="Title">Title</label>
+    <input id="Title" ng-model="model.Title">
+        
+    <label for="Message">Message</label>
+    <input id="Message" ng-model="model.Message">
+</form>
+   
+<div class="sticky_note">
+    <div>
+        <h1>{{model.Title}}</h1>
+        <p>{{model.Message}}</p>
+    </div>
+</div>
+
+</body>
+```
+
+In diesem Beispiel finden wir die Direktiven `ng-app`, welche eine Anwendung automatisch bereitstellt ("auto-bootstrap"), `ng-init`, welche Code ausführt (eval) und hier z.B. quick-and-dirty ein Model setzt und `ng-model`, welche den View und das Model per Two-Way-Binding verbindet. 
+
+Es fällt auf, dass das Model keine Observables implementieren muss. Das obrige Beispiel ist ein wenig dirty, "model" ist in wirklichkeit nicht das Model, sondern ein neu erstelltes Property am `$scope`, welcher das eigentlich ViewModel ist. In der Dokumentation von AngularJS wird übrigens nicht zwischen "Model" und "ViewModel" unterschieden. ("typisch" **MVW**)      
+
+**Ist ein Wechsel möglich?**
+
+Ein Austausch der Engines wäre prinzipiell möglich, da AngularJS den Funktionsumfang von Knockout.js abdeckt und zusätzlich erweitert. Die Direktiven können dabei helfen, die Anzahl an Code-Zeilen zu minimieren. Stolpersteine wird es definitiv durch dem Umstand geben, dass ein AngularJS Model nicht "observable" ist. Dieses Prinzip nennt sich "**dirty checking**". Hinter den Szenen setzt AngularJS eine so gennante `$watch` in eine Liste. ([siehe z.B. hier](http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/)) Diese werden verwendet um Änderungen zu erkennen. Diese sind verbunden mit Standardfunktionalitäten wie `$timeout` oder `$http`. In den meisten Fällen werden Änderungen erkannt werden, aber intensive Tests sind notwendig um wirklich sicher zu sein.
+
+
+Bei den meisten Interaktionen    
+
+aber mit großem Aufwand verbunden
 
 
 <a name="links"></a>
 ## 9. Links
 
+Knockout.js: http://knockoutjs.com/  
 MVC: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc  
 MVVM: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm  
 MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2  
+Observer Pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript  
+$watch: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/
 
 <hr>
 
