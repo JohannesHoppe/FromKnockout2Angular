@@ -43,9 +43,9 @@ Unter der Prämisse, das wir uns im Kontext einer **MVW** Anwendung bewegen, ist
 <a name="links"></a>
 ## 9. Links
 
-MVC: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc
-MVVM: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm
-MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2
+MVC: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc  
+MVVM: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm  
+MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2  
 
 <hr>
 
