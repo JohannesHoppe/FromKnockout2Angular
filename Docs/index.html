@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>index</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* This file is deliberately empty */
+</style>
+<link rel="stylesheet" type="text/css" href="included/markdown-github.css">
+<link rel="stylesheet" type="text/css" href="included/highlight/styles/github.css">
+
+<script src="included/highlight/highlight.pack.js"></script>
+<script src="included/extra.js"></script>
+</head>
+<body>
+<p><img src="../Slides/images/logo.png" alt="Logo"></p>
+<h1 id="von-knockout-zu-angularjs">Von Knockout zu AngularJS</h1>
+<h5 id="table-of-contents">Table of Contents</h5>
+<ol>
+<li><a href="#einleitung">Einleitung</a>  </li>
+<li><a href="#schwerpunkte">Schwerpunkte</a>  </li>
+<li><a href="#MVVM">MVVM</a>  </li>
+<li><a href="#links">Links</a>  </li>
+</ol>
+<p><a name="einleitung"></a></p>
+<h2 id="1-einleitung">1. Einleitung</h2>
+<p>Das JavaScript-Framework Knockout.js konzentriert sich klar auf eine Aufgabe. Diese ist das Bereitstellen einer MVVM-Engine. Zusätzliche Funktionalitäten wie modularer Code oder clientseitiges Routing müssen durch weitere Bibliotheken hinzugefügt werden. Gerade für größere SinglePage Anwendungen sind zahlreiche weitere JavaScript-Libraries nach und nach hinzuzufügen. Wer auf Knockout.js als Technologie für eine SPA (Single-Page Application) gesetzt hat, kann durch den Zechnologie-Zoo mitunter etwas ernüchtert sein. </p>
+<p>Im Kontrast hierzu steht AngularJS. Dieses Framework bietet einen viel größeren Funktionsumfang. Es sind viele Funktionalitäten vorhanden, die für eine homogene SPA-Architektur verwendet werden können. AngularJS schickt sich an &quot;Marktführer&quot; für SPAs zu werden und diese Position dank der Unterstützung von Google auch zu behaupten.</p>
+<p>In dieser Session (und mit dem Ihnen hier vorliegenden Handout) werden Knockout und AngularJS miteinander vergleichen. Anhand <strong>ausgewählter Schwerpunkte</strong>  sollen jeweilige Vorteile und Schwächen herausgearbeitet und mit Code-Beispielen belegt werden. Johannes Hoppe beleuchtet hierbei stets die Frage ob und wie ein Umstieg von Knockout auf Angular JS sinnvoll und machbar ist bzw. wäre. </p>
+<p><a name="schwerpunkte"></a></p>
+<h2 id="2-schwerpunkte">2. Schwerpunkte</h2>
+<p>Bei einer SPA-Architektur geht es im stets darum, möglichst viel Kontrollfluss- und Rendering-Logik vom Webserver auf den Browser zu bringen. Der Webserver liefert im Idealfall nur noch eine einziges HTML-Dokument aus, welches dann die Kontrolle übernimmt. Prinzipiell kann man die verschiedensten Entwurfsmuster (Pattern) auf diesem einzelnen HTML-Dokument anwenden. In der Praxis zeigt sich aber, dass das <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc">MVC (Model-View-Controller)</a> Pattern die bevorzugte Umsetzung ist. Diese Enwurfsmuster hat sich auf dem Server als Standard durchgesetzt. Es ist keine schlechte Idee, bewährtes auf den Browser zu übertragen. Ebenso bieten die meisten SPA-Frameworks eine <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm">MVVM (Model-View-ViewModel)</a> Engine an. Diese beiden Prinzipien ergänzen sich gut. Durch ihre große inhaltliche Überschneidung bietet es sich an, beide Prinzipien in einen Topf zu werfen und kräftig umzurühren. Genauso sehen es auch die Macher von AngularJS, welche ihr Framework ganz pragmatisch ein <a href="https://plus.google.com/+AngularJS/posts/aZNVhj355G2">MVW (Model-View-Whatever (works for you))</a> Framework nennen.       </p>
+<p>Unter der Prämisse, das wir uns im Kontext einer <strong>MVW</strong> Anwendung bewegen, ist es legitim, folgende Schwerpunkte als Vergleichsgegenstand auszuwählen:</p>
+<ol>
+<li>MVVM</li>
+<li>Templating bzw. wiederverwendbarer Code</li>
+<li>Routing</li>
+<li>Modularer Code</li>
+</ol>
+<p><a name="MVVM"></a></p>
+<h2 id="2-schwerpunkte">2. Schwerpunkte</h2>
+<pre><code class="lang-html">&lt;b&gt;</code></pre>
+<p><a name="links"></a></p>
+<h2 id="9-links">9. Links</h2>
+<p>MVC: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc</a><br>MVVM: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm</a><br>MVW: <a href="https://plus.google.com/+AngularJS/posts/aZNVhj355G2">https://plus.google.com/+AngularJS/posts/aZNVhj355G2</a></p>
+<hr>
+
+<p><em>&copy; 2014, Johannes Hoppe</em></p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
