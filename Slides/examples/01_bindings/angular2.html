@@ -1,17 +1,18 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="ExampleApp" >
 <head>
     <title>NG Form Example</title>   
     
     <link href="../style.css" rel="stylesheet" />
     <script src="../../js/angular-1.3.0/angular.js"></script>
+    <script src="exampleApp.js"></script>
 </head>
 
 <!--START-->
 
-<body class="example" ng-app="ExampleApp">
+<body class="example" ng-controller="ExampleController">
 
-<form class="form_example" ng-controller="ExampleController as model">
+<form class="form_example">
     <label for="Title">Title</label>
     <input id="Title" ng-model="model.Title">
         
@@ -25,17 +26,6 @@
         <p>{{model.Message}}</p>
     </div>
 </div>
-
-<script>
-
-    var exampleApp = angular.module('ExampleApp', []);
-    exampleApp.controller('ExampleController', function ($scope) {
-
-        $scope.Title = "Remember";
-        $scope.Message = "the milk";
-
-    });
-</script>    
 
 </body>
 
