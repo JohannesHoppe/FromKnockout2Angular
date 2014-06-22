@@ -17,30 +17,30 @@
 <h1 id="von-knockout-zu-angularjs">Von Knockout zu AngularJS</h1>
 <h5 id="table-of-contents">Table of Contents</h5>
 <ol>
-<li><a href="#einleitung">Einleitung</a>  </li>
-<li><a href="#schwerpunkte">Schwerpunkte</a>  </li>
-<li><a href="#MVVM">MVVM</a>  </li>
+<li><a href="#Einleitung">Einleitung</a>  </li>
+<li><a href="#Schwerpunkte">Schwerpunkte</a><br> 2.1. <a href="#Bindings">Bindings</a><br> 2.2. <a href="#Templating">Templating</a><br> 2.3. <a href="#Routing">Routing</a><br> 2.4. <a href="#Modules">Modularer Code</a></li>
+<li><a href="#Fazit">Fazit</a>     </li>
 <li><a href="#links">Links</a>  </li>
 </ol>
-<p><a name="einleitung"></a></p>
-<h2 id="1-einleitung">1. Einleitung</h2>
+<p><a name="Einleitung"></a></p>
+<h1 id="1-einleitung">1. Einleitung</h1>
 <p>Das JavaScript-Framework <a href="http://knockoutjs.com/">Knockout.js</a> konzentriert sich klar auf eine Aufgabe. Diese ist das Bereitstellen einer MVVM-Engine. Zusätzliche Funktionalitäten wie modularer Code oder clientseitiges Routing müssen durch weitere Bibliotheken hinzugefügt werden. Gerade für größere SinglePage Anwendungen sind zahlreiche weitere JavaScript-Libraries nach und nach hinzuzufügen. Wer auf Knockout.js als Technologie für eine SPA (Single-Page Application) gesetzt hat, kann durch den Zechnologie-Zoo mitunter etwas ernüchtert sein. </p>
 <p>Im Kontrast hierzu steht <a href="https://angularjs.org/">AngularJS</a>. Dieses Framework bietet einen viel größeren Funktionsumfang. Es sind viele Funktionalitäten vorhanden, die für eine homogene SPA-Architektur verwendet werden können. AngularJS schickt sich an &quot;Marktführer&quot; für SPAs zu werden und diese Position dank der Unterstützung von Google auch zu behaupten.</p>
 <p>In dieser Session (und mit dem Ihnen hier vorliegenden Handout) werden Knockout und AngularJS miteinander vergleichen. Anhand <strong>ausgewählter Schwerpunkte</strong>  sollen jeweilige Vorteile und Schwächen herausgearbeitet und mit Code-Beispielen belegt werden. Johannes Hoppe beleuchtet hierbei stets die Frage ob und wie ein Umstieg von Knockout auf Angular JS sinnvoll und machbar ist bzw. wäre. </p>
-<p><a name="schwerpunkte"></a></p>
-<h2 id="2-schwerpunkte">2. Schwerpunkte</h2>
+<p><a name="Schwerpunkte"></a></p>
+<h1 id="2-schwerpunkte">2. Schwerpunkte</h1>
 <p>Bei einer SPA-Architektur geht es im stets darum, möglichst viel Kontrollfluss- und Rendering-Logik vom Webserver auf den Browser zu bringen. Der Webserver liefert im Idealfall nur noch eine einziges HTML-Dokument aus, welches dann die Kontrolle übernimmt. Prinzipiell kann man die verschiedensten Entwurfsmuster (Pattern) auf diesem einzelnen HTML-Dokument anwenden. In der Praxis zeigt sich aber, dass das <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc">MVC (Model-View-Controller)</a> Pattern die bevorzugte Umsetzung ist. Diese Enwurfsmuster hat sich auf dem Server als Standard durchgesetzt. Es ist keine schlechte Idee, bewährtes auf den Browser zu übertragen. Ebenso bieten die meisten SPA-Frameworks eine <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm">MVVM (Model-View-ViewModel)</a> Engine an. Diese beiden Prinzipien ergänzen sich gut. Durch ihre große inhaltliche Überschneidung bietet es sich an, beide Prinzipien in einen Topf zu werfen und kräftig umzurühren. Genauso sehen es auch die Macher von AngularJS, welche ihr Framework ganz pragmatisch ein <a href="https://plus.google.com/+AngularJS/posts/aZNVhj355G2">MVW (Model-View-Whatever (works for you))</a> Framework nennen.       </p>
 <p>Unter der Prämisse, das wir uns im Kontext einer <strong>MVW</strong> Anwendung bewegen, ist es legitim, folgende Schwerpunkte als Vergleichsgegenstand auszuwählen:</p>
 <ol>
-<li>MVVM</li>
-<li>Templating bzw. wiederverwendbarer Code</li>
+<li>Bindings</li>
+<li>Templating</li>
 <li>Routing</li>
 <li>Modularer Code</li>
 </ol>
 <p><img src="images/apples_and_pears.png" alt="Äpfel mit Birnen"></p>
-<p>Es bleibt ein kleines Dilemma. Knockout.js und AngularJS sind eigentlich nicht miteinander vergleichbar. Wie Äpfel und Birnen haben beide Frameworks einen unterschiedlichen Schwerpunkt. AngularJS hat den Anspruch ein universales JavaScript-Framework für SPAs zu sein, Knockout hingegeben beschränkt sich hingegen darauf, eine MVVM Engine zur Verfügung zu stellen. Für eine ebenbürtigen Vergleich sollte man z.B. eher <a href="http://durandaljs.com/">Durandal</a> und AngularJS miteinander messen.   </p>
-<p><a name="MVVM"></a></p>
-<h2 id="3-mvvm">3. MVVM</h2>
+<p>Es bleibt ein kleines Dilemma. Knockout.js und AngularJS sind eigentlich nicht miteinander vergleichbar. Wie Äpfel und Birnen haben beide Frameworks einen unterschiedlichen Schwerpunkt. AngularJS hat den Anspruch ein universales JavaScript-Framework für SPAs zu sein, Knockout hingegeben beschränkt sich hingegen darauf, eine MVVM Engine zur Verfügung zu stellen. Für einen fairen Vergleich lönnte man z.B. eher <a href="http://durandaljs.com/">Durandal</a> und AngularJS miteinander messen.   </p>
+<p><a name="Bindings"></a></p>
+<h2 id="2-1-bindings">2.1. Bindings</h2>
 <p>Das folgende Beispiel basiert auf einem einfachem Formular, welches bei Wertänderung den Inhalt eines gelben Notizzettels verändert:</p>
 <p><img src="images/remember_the_milk.png" alt="Screenshot"></p>
 <p>In den Zeiten vor MVVM waren einfache UI-Themen zuweilen sehr komplex. Folgender Sourcode demonstriert, wie z.B. nur mit jQuery der Notizzettel verarbeitet werden muss.</p>
@@ -130,9 +130,16 @@
 <p>In diesem Beispiel finden wir die Direktiven <code>ng-app</code>, welche eine Anwendung automatisch bereitstellt (&quot;auto-bootstrap&quot;), <code>ng-init</code>, welche Code ausführt (eval) und hier z.B. quick-and-dirty ein Model setzt und <code>ng-model</code>, welche den View und das Model per Two-Way-Binding verbindet. </p>
 <p>Es fällt auf, dass das Model keine Observables implementieren muss. Das obrige Beispiel ist ein wenig dirty, &quot;model&quot; ist in wirklichkeit nicht das Model, sondern ein neu erstelltes Property am <code>$scope</code>, welcher das eigentlich ViewModel ist. In der Dokumentation von AngularJS wird übrigens nicht zwischen &quot;Model&quot; und &quot;ViewModel&quot; unterschieden. (&quot;typisch&quot; <strong>MVW</strong>)      </p>
 <p><strong>Ist ein Wechsel möglich?</strong></p>
-<p>Ein Austausch der Engines wäre prinzipiell möglich, da AngularJS den Funktionsumfang von Knockout.js abdeckt und zusätzlich erweitert. Die Direktiven können dabei helfen, die Anzahl an Code-Zeilen zu minimieren. Stolpersteine wird es definitiv durch dem Umstand geben, dass ein AngularJS Model nicht &quot;observable&quot; ist. Dieses Prinzip nennt sich &quot;<strong>dirty checking</strong>&quot;. Hinter den Szenen setzt AngularJS eine so gennante <code>$watch</code> in eine Liste. (<a href="http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/">siehe z.B. hier</a>) Diese werden verwendet um Änderungen zu erkennen. Diese sind verbunden mit Standardfunktionalitäten wie <code>$timeout</code> oder <code>$http</code>. In den meisten Fällen werden Änderungen erkannt werden, aber intensive Tests sind notwendig um wirklich sicher zu sein.</p>
-<p>Bei den meisten Interaktionen    </p>
-<p>aber mit großem Aufwand verbunden</p>
+<p>Ein Austausch der MVVM Engines ist prinzipiell möglich, da AngularJS den Funktionsumfang von Knockout.js abdeckt und zusätzlich erweitert. Die Direktiven können dabei helfen, die Anzahl an Code-Zeilen zu minimieren. Stolpersteine wird es definitiv durch dem Umstand geben, dass ein AngularJS Model nicht &quot;observable&quot; ist. Dieses Prinzip nennt sich &quot;<strong>dirty checking</strong>&quot;. Hinter den Szenen setzt AngularJS für jedes Binding eine so gennante <code>$watch</code> in eine Liste. (<a href="http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/">Info zu $watch und $digest</a>) Die Watches werden verwendet um Änderungen zu erkennen. Hinzu kommen Standardfunktionalitäten wie <code>$timeout</code> oder <code>$http</code>, welche das dirty checking berücksichtigen. In den meisten Fällen werden Änderungen korrekt erkannt, aber intensive Tests sind notwendig um wirklich sicher zu sein.</p>
+<p><a name="Templating"></a></p>
+<h2 id="2-2-templating">2.2. Templating</h2>
+<p>[TODO]</p>
+<p><a name="Routing"></a></p>
+<h2 id="2-2-routing">2.2. Routing</h2>
+<p>[TODO]</p>
+<p><a name="Modules"></a></p>
+<h2 id="2-3-modularer-code">2.3. Modularer Code</h2>
+<p>[TODO]</p>
 <p><a name="links"></a></p>
 <h2 id="9-links">9. Links</h2>
 <p>Knockout.js: <a href="http://knockoutjs.com/">http://knockoutjs.com/</a><br>MVC: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc</a><br>MVVM: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm</a><br>MVW: <a href="https://plus.google.com/+AngularJS/posts/aZNVhj355G2">https://plus.google.com/+AngularJS/posts/aZNVhj355G2</a><br>Observer Pattern: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript</a><br>$watch: <a href="http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/">http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/</a></p>
