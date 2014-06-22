@@ -257,7 +257,7 @@ ul.model {
 }
 ul.model li {
   margin-bottom: 30px;
-  color: #494d4d;
+  color: #494D4D;
 }
 ul.model span {
   padding: 5px !important;
@@ -272,9 +272,12 @@ ul.model span {
 }
 ul.model i {
   color: white;
+  margin-right: 10px;
 }
 ul.model.comparison span {
-  width: 250px;
+  display: inline-block;
+  width: 280px;
+  margin-top: 0px;
 }
 
 /*
@@ -384,6 +387,22 @@ iframe.spec {
 /* IE-Patch fÅr IE 6*/
 * html .clearfix {
   height: 1%;
+}
+
+.green {
+  color: #4e9a06;
+}
+
+span.green {
+  background-color: #4e9a06 !important;
+}
+
+.red {
+  color: #c4473a;
+}
+
+span.red {
+  background-color: #c4473a !important;
 }
 
 /* ReSharper restore UnknownHtmlTag */
