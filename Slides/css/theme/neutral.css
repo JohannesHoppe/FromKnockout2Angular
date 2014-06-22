@@ -270,6 +270,12 @@ ul.model span {
   color: white;
   width: 300px;
 }
+ul.model i {
+  color: white;
+}
+ul.model.comparison span {
+  width: 250px;
+}
 
 /*
 .reveal .state-background {
