@@ -11,6 +11,33 @@
 <body class="example">
          
 <!--START-->
+
+<form class="form_example">
+    <label for="Title">Title</label>
+    <input id="Title" data-bind="value: Title">    
+        
+    <label for="Message">Message</label>
+    <input id="Message" data-bind="value: Message">
+</form>    
+    
+<div data-bind="template: {
+    name: 'sticky-note-template',
+    data: {
+        Title: Title,
+        Message: Message
+    }
+}"></div>
+  
+    
+<script type="text/html" id="sticky-note-template">  
+    <div class="sticky_note">
+        <div>
+            <h1 data-bind="text: Title"></h1>
+            <p data-bind="text: Message"></p>
+        </div>
+    </div>  
+</script>
+
     
 <script>
     $(function () {
@@ -24,22 +51,7 @@
         ko.applyBindings(viewmodel);
 
     });
-</script>
-
-<form class="form_example">
-    <label for="Title">Title</label>
-    <input id="Title" data-bind="value: Title">    
-        
-    <label for="Message">Message</label>
-    <input id="Message" data-bind="value: Message">
-</form>
-         
-<div class="sticky_note">
-    <div>
-        <h1 data-bind="text: Title"></h1>
-        <p data-bind="text: Message"></p>
-    </div>
-</div>
+</script>    
 
 <!--STOP-->
 
