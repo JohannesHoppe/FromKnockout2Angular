@@ -41,8 +41,11 @@
   <ItemGroup>
     <Content Include="examples\01_bindings\angular.html" />
     <Content Include="examples\01_bindings\angular2.html" />
-    <Content Include="examples\01_bindings\exampleApp.js" />
+    <Content Include="examples\01_bindings\angular2.js" />
+    <Content Include="examples\02_templating\angular.html" />
+    <Content Include="examples\02_templating\angular.js" />
     <Content Include="examples\02_templating\knockout.html" />
+    <Content Include="examples\02_templating\knockout.js" />
     <Content Include="examples\fonts\BuxtonSketch.css" />
     <Content Include="examples\01_bindings\knockout.html" />
     <Content Include="examples\01_bindings\jQuery.html" />

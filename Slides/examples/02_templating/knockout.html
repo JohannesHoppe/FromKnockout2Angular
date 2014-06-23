@@ -6,6 +6,7 @@
     <link href="../style.css" rel="stylesheet" />
     <script src="../../js/jquery/jquery-1.11.1.js"></script>
     <script src="../../js/knockout-3.1.0/knockout.debug.js"></script>
+    <script src="knockout.js"></script>
 
 </head>
 <body class="example">
@@ -27,7 +28,6 @@
         Message: Message
     }
 }"></div>
-  
     
 <script type="text/html" id="sticky-note-template">  
     <div class="sticky_note">
@@ -36,22 +36,7 @@
             <p data-bind="text: Message"></p>
         </div>
     </div>  
-</script>
-
-    
-<script>
-    $(function () {
-
-        var ViewModel = function () {
-            this.Title = ko.observable('Remember');
-            this.Message = ko.observable('the milk');
-        };
-
-        var viewmodel = new ViewModel();
-        ko.applyBindings(viewmodel);
-
-    });
-</script>    
+</script>  
 
 <!--STOP-->
 
