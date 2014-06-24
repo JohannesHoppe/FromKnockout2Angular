@@ -82,6 +82,7 @@ In den Zeiten vor MVVM waren einfache UI-Themen zuweilen sehr komplex. Folgender
 </div>
 
 ```
+[Demo](../Slides/examples/01_bindings/jQuery.html)
 
 Man sieht, dass auf die einzelnen HTML-Elemente umständlich zugriffen werden muss. Eine deutliche Vereinfachung bietet hier MVVM. 
  
@@ -119,6 +120,7 @@ Diese Verbindung zwischen View und ViewModel nennt sich **Binding**, diese geht 
     </div>
 </div>
 ```
+[Demo](../Slides/examples/01_bindings/knockout.html)  
 
 Bei Knockout verwendet man für die Two-Way-Bindings Objekte vom Typ `Observable`. Diese implementieren (wie der Name bereits suggeriert), das [Observer Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript). Entsprechend dazu werden die Bindungs auf HTML-Elemente mit dem data-Attribut `data-bind` spezifiziert.
 
@@ -144,6 +146,8 @@ In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist je
 
 </body>
 ```
+[Demo](../Slides/examples/01_bindings/angular.html)  
+[Demo2](../Slides/examples/01_bindings/angular2.html) 
 
 In diesem Beispiel finden wir die Direktiven `ng-app`, welche eine Anwendung automatisch bereitstellt ("auto-bootstrap"), `ng-init`, welche Code ausführt (eval) und hier z.B. quick-and-dirty ein Model setzt und `ng-model`, welche den View und das Model per Two-Way-Binding verbindet. 
 
@@ -157,7 +161,38 @@ Ein Austausch der MVVM Engines ist möglich, da AngularJS prinzipiell den Funkti
 <a name="Templating"></a>
 ## 2.2. Templating
 
-[TODO]
+In jeder Template-Sprache gibt es die Möglichkeit, repetitiven Code zu vermeiden. Im vorliegenden Beispiel bietet es sich z.B. an, den gelben Notizzettel auszulagern - damit dieser mehrfach verwendet werden kann.
+
+In Knockout kann man dies direkt über das `template`-Binding realisieren. 
+
+```html
+<form class="form_example">
+    <label for="Title">Title</label>
+    <input id="Title" data-bind="value: Title">    
+        
+    <label for="Message">Message</label>
+    <input id="Message" data-bind="value: Message">
+</form>    
+    
+<div data-bind="template: {
+    name: 'sticky-note-template',
+    data: {
+        Title: Title,
+        Message: Message
+    }
+}"></div>
+    
+<script type="text/html" id="sticky-note-template">  
+    <div class="sticky_note">
+        <div>
+            <h1 data-bind="text: Title"></h1>
+            <p data-bind="text: Message"></p>
+        </div>
+    </div>  
+</script>
+```
+
+AngularJs 
 
 <a name="Routing"></a>
 ## 2.3. Routing
@@ -180,6 +215,11 @@ MVVM: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm
 MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2  
 Observer Pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript  
 $watch: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/
+
+
+Sie finden dieses Dokument auf: http://johanneshoppe.github.io/FromKnockout2Angular/Docs/
+Alle Demos sind in der Präsentation verlinkt: http://johanneshoppe.github.io/FromKnockout2Angular/Slides/  
+
 
 <hr>
 
