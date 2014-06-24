@@ -1,6 +1,6 @@
 ﻿angular.module('ExampleApp', [])
 
-    .directive('sticky-note', function () {
+    .directive('stickyNote', function () {
         return {
             // directive only matches elements now
             restrict: 'E',  
