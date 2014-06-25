@@ -47,27 +47,27 @@
 <pre><code class="lang-html">&lt;script&gt;
     $(function ($) {
 
-        $(&#39;#Title&#39;).change(function () {
+        $(&#39;#title&#39;).change(function () {
             var title = $(this).val();
             $(&#39;#jQuery_output h1&#39;).text(title);
         });
 
-        $(&#39;#Message&#39;).change(function () {
+        $(&#39;#message&#39;).change(function () {
             var message = $(this).val();
             $(&#39;#jQuery_output p&#39;).text(message);
         });
 
-        $(&#39;#Title&#39;).change();
-        $(&#39;#Message&#39;).change();
+        $(&#39;#title&#39;).change();
+        $(&#39;#message&#39;).change();
     });
 &lt;/script&gt;
 
 &lt;form&gt;
-    &lt;label for=&quot;Title&quot;&gt;Title&lt;/label&gt;
-    &lt;input id=&quot;Title&quot; value=&quot;Remeber&quot;&gt;
+    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+    &lt;input id=&quot;title&quot; value=&quot;Remeber&quot;&gt;
 
-    &lt;label for=&quot;Message&quot;&gt;Message&lt;/label&gt;
-    &lt;input id=&quot;Message&quot; value=&quot;the milk&quot;&gt;
+    &lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
+    &lt;input id=&quot;message&quot; value=&quot;the milk&quot;&gt;
 &lt;/form&gt;
 
 &lt;div id=&quot;jQuery_output&quot; class=&quot;sticky_note&quot;&gt;
@@ -84,8 +84,8 @@
     $(function () {
 
         var ViewModel = function () {
-            this.Title = ko.observable(&#39;Remember&#39;);
-            this.Message = ko.observable(&#39;the milk&#39;);
+            this.title = ko.observable(&#39;Remember&#39;);
+            this.message = ko.observable(&#39;the milk&#39;);
         };
 
         var viewmodel = new ViewModel();
@@ -95,17 +95,17 @@
 &lt;/script&gt;
 
 &lt;form&gt;
-    &lt;label for=&quot;Title&quot;&gt;Title&lt;/label&gt;
-    &lt;input id=&quot;Title&quot; data-bind=&quot;value: Title&quot;&gt;    
+    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+    &lt;input id=&quot;title&quot; data-bind=&quot;value: title&quot;&gt;    
 
-    &lt;label for=&quot;Message&quot;&gt;Message&lt;/label&gt;
-    &lt;input id=&quot;Message&quot; data-bind=&quot;value: Message&quot;&gt;
+    &lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
+    &lt;input id=&quot;message&quot; data-bind=&quot;value: message&quot;&gt;
 &lt;/form&gt;
 
 &lt;div class=&quot;sticky_note&quot;&gt;
     &lt;div&gt;
-        &lt;h1 data-bind=&quot;text: Title&quot;&gt;&lt;/h1&gt;
-        &lt;p data-bind=&quot;text: Message&quot;&gt;&lt;/p&gt;
+        &lt;h1 data-bind=&quot;text: title&quot;&gt;&lt;/h1&gt;
+        &lt;p data-bind=&quot;text: message&quot;&gt;&lt;/p&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 <p><a href="../Slides/examples/01_bindings/knockout.html">Demo</a>  </p>
@@ -113,18 +113,18 @@
 <p>In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist jedoch die Tatsache, das noch weniger JavaScript geschrieben werden muss. Dies wird durch so genannte &quot;<a href="https://docs.angularjs.org/guide/directive">Directives</a>&quot; / Direktiven ermöglicht. Direktiven sind Marker im HTML, welche dem HTML compiler (<code>$compile</code>) von AngularJS Instruktionen geben. Es wird dadurch eine sehr deklarative Beschreibung der Applikation möglich.</p>
 <pre><code class="lang-html">&lt;body class=&quot;example&quot; ng-app&gt;
 
-&lt;form ng-init=&quot;model = { Title: &#39;Remember&#39;, &#39;Message&#39;: &#39;the milk&#39; }&quot;&gt;
-    &lt;label for=&quot;Title&quot;&gt;Title&lt;/label&gt;
-    &lt;input id=&quot;Title&quot; ng-model=&quot;model.Title&quot;&gt;
+&lt;form ng-init=&quot;model = { title: &#39;Remember&#39;, &#39;message&#39;: &#39;the milk&#39; }&quot;&gt;
+    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+    &lt;input id=&quot;title&quot; ng-model=&quot;model.title&quot;&gt;
 
-    &lt;label for=&quot;Message&quot;&gt;Message&lt;/label&gt;
-    &lt;input id=&quot;Message&quot; ng-model=&quot;model.Message&quot;&gt;
+    &lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
+    &lt;input id=&quot;message&quot; ng-model=&quot;model.message&quot;&gt;
 &lt;/form&gt;
 
 &lt;div class=&quot;sticky_note&quot;&gt;
     &lt;div&gt;
-        &lt;h1&gt;{{model.Title}}&lt;/h1&gt;
-        &lt;p&gt;{{model.Message}}&lt;/p&gt;
+        &lt;h1&gt;{{model.title}}&lt;/h1&gt;
+        &lt;p&gt;{{model.message}}&lt;/p&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
@@ -136,7 +136,33 @@
 <p>Ein Austausch der MVVM Engines ist möglich, da AngularJS prinzipiell den Funktionsumfang von Knockout.js abdeckt und zusätzlich erweitert. Beide Engines verwenden den <strong>DOM</strong> als View, so dass nicht alles neu geschrieben werden muss. Die Direktiven können dabei helfen, die Anzahl an Code-Zeilen zu minimieren. Stolpersteine wird es definitiv durch den Umstand geben, dass ein AngularJS Model nicht &quot;observable&quot; ist. Dieses Prinzip nennt sich &quot;<strong>dirty checking</strong>&quot;. Hinter den Szenen setzt AngularJS für jedes Binding eine so genannte <code>$watch</code> in eine Liste. (<a href="http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/">Info zu $watch und $digest</a>) Die Watches werden verwendet um Änderungen zu erkennen. Hinzu kommen Standardfunktionalitäten wie <code>$timeout</code> oder <code>$http</code>, welche das dirty checking berücksichtigen. In den meisten Fällen werden Änderungen korrekt erkannt, aber intensive Tests sind notwendig um wirklich sicher zu sein.</p>
 <p><a name="Templating"></a></p>
 <h2 id="2-2-templating">2.2. Templating</h2>
-<p>In </p>
+<p>In jeder Template-Sprache gibt es die Möglichkeit, repetitiven Code zu vermeiden. Im vorliegenden Beispiel bietet es sich z.B. an, den gelben Notizzettel auszulagern - damit dieser mehrfach verwendet werden kann.</p>
+<p>In Knockout kann man dies direkt über das <code>template</code>-Binding realisieren. </p>
+<pre><code class="lang-html">&lt;form class=&quot;form_example&quot;&gt;
+    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+    &lt;input id=&quot;title&quot; data-bind=&quot;value: title&quot;&gt;    
+
+    &lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
+    &lt;input id=&quot;message&quot; data-bind=&quot;value: message&quot;&gt;
+&lt;/form&gt;    
+
+&lt;div data-bind=&quot;template: {
+    name: &#39;sticky-note-template&#39;,
+    data: {
+        title: title,
+        message: message
+    }
+}&quot;&gt;&lt;/div&gt;
+
+&lt;script type=&quot;text/html&quot; id=&quot;sticky-note-template&quot;&gt;  
+    &lt;div class=&quot;sticky_note&quot;&gt;
+        &lt;div&gt;
+            &lt;h1 data-bind=&quot;text: title&quot;&gt;&lt;/h1&gt;
+            &lt;p data-bind=&quot;text: message&quot;&gt;&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;  
+&lt;/script&gt;</code></pre>
+<p>AngularJs </p>
 <p><a name="Routing"></a></p>
 <h2 id="2-3-routing">2.3. Routing</h2>
 <p>[TODO]</p>

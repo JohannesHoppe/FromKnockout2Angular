@@ -13,27 +13,27 @@
 <script>
     $(function ($) {
 
-        $('#Title').change(function () {
+        $('#title').change(function () {
             var title = $(this).val();
             $('#jQuery_output h1').text(title);
         });
 
-        $('#Message').change(function () {
+        $('#message').change(function () {
             var message = $(this).val();
             $('#jQuery_output p').text(message);
         });
 
-        $('#Title').change();
-        $('#Message').change();
+        $('#title').change();
+        $('#message').change();
     });
 </script>
 
 <form class="form_example">
-    <label for="Title">Title</label>
-    <input id="Title" value="Remeber">
+    <label for="title">Title</label>
+    <input id="title" value="Remeber">
         
-    <label for="Message">Message</label>
-    <input id="Message" value="the milk">
+    <label for="message">Message</label>
+    <input id="message" value="the milk">
 </form>
 
 <div id="jQuery_output" class="sticky_note">

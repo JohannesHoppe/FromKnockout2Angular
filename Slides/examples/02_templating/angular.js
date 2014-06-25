@@ -8,24 +8,26 @@
             // creates a new isolated scope 
             // '=' means bi-directional / '@' means the variable will be copied (cloned)
             scope: { 
-                Title: '@title',
-                Message: '@message',
+                title: '@',
+                message: '@',
             },
+            templateUrl: 'angular.tmpl.html'
+            /*
             template:
                 '<div class="sticky_note">' +
                 '    <div>' +
-                '        <h1>{{Title}}</h1>' +
-                '        <p>{{Message}}</p>' +
+                '        <h1>{{title}}</h1>' +
+                '        <p>{{message}}</p>' +
                 '    </div>' +
-                '</div>'
+                '</div>' */
         }
     })
 
     .controller('ExampleController', function ($scope) {
 
         $scope.model = {
-            Title: "Remember",
-            Message: "the milk"
+            title: "Remember",
+            message: "the milk"
         }
         
     });

@@ -2,8 +2,8 @@
     .controller('ExampleController', function ($scope) {
 
         $scope.model = {
-            Title: "Remember",
-            Message: "the milk"
+            title: "Remember",
+            message: "the milk"
         }
         
     });

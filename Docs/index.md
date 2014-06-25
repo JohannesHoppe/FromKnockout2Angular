@@ -51,27 +51,27 @@ In den Zeiten vor MVVM waren einfache UI-Themen zuweilen sehr komplex. Folgender
 <script>
     $(function ($) {
 
-        $('#Title').change(function () {
+        $('#title').change(function () {
             var title = $(this).val();
             $('#jQuery_output h1').text(title);
         });
 
-        $('#Message').change(function () {
+        $('#message').change(function () {
             var message = $(this).val();
             $('#jQuery_output p').text(message);
         });
 
-        $('#Title').change();
-        $('#Message').change();
+        $('#title').change();
+        $('#message').change();
     });
 </script>
 
 <form>
-    <label for="Title">Title</label>
-    <input id="Title" value="Remeber">
+    <label for="title">Title</label>
+    <input id="title" value="Remeber">
         
-    <label for="Message">Message</label>
-    <input id="Message" value="the milk">
+    <label for="message">Message</label>
+    <input id="message" value="the milk">
 </form>
 
 <div id="jQuery_output" class="sticky_note">
@@ -95,8 +95,8 @@ Diese Verbindung zwischen View und ViewModel nennt sich **Binding**, diese geht 
     $(function () {
 
         var ViewModel = function () {
-            this.Title = ko.observable('Remember');
-            this.Message = ko.observable('the milk');
+            this.title = ko.observable('Remember');
+            this.message = ko.observable('the milk');
         };
 
         var viewmodel = new ViewModel();
@@ -106,17 +106,17 @@ Diese Verbindung zwischen View und ViewModel nennt sich **Binding**, diese geht 
 </script>
 
 <form>
-    <label for="Title">Title</label>
-    <input id="Title" data-bind="value: Title">    
+    <label for="title">Title</label>
+    <input id="title" data-bind="value: title">    
         
-    <label for="Message">Message</label>
-    <input id="Message" data-bind="value: Message">
+    <label for="message">Message</label>
+    <input id="message" data-bind="value: message">
 </form>
          
 <div class="sticky_note">
     <div>
-        <h1 data-bind="text: Title"></h1>
-        <p data-bind="text: Message"></p>
+        <h1 data-bind="text: title"></h1>
+        <p data-bind="text: message"></p>
     </div>
 </div>
 ```
@@ -129,18 +129,18 @@ In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist je
 ```html
 <body class="example" ng-app>
 
-<form ng-init="model = { Title: 'Remember', 'Message': 'the milk' }">
-    <label for="Title">Title</label>
-    <input id="Title" ng-model="model.Title">
+<form ng-init="model = { title: 'Remember', 'message': 'the milk' }">
+    <label for="title">Title</label>
+    <input id="title" ng-model="model.title">
         
-    <label for="Message">Message</label>
-    <input id="Message" ng-model="model.Message">
+    <label for="message">Message</label>
+    <input id="message" ng-model="model.message">
 </form>
    
 <div class="sticky_note">
     <div>
-        <h1>{{model.Title}}</h1>
-        <p>{{model.Message}}</p>
+        <h1>{{model.title}}</h1>
+        <p>{{model.message}}</p>
     </div>
 </div>
 
@@ -167,26 +167,26 @@ In Knockout kann man dies direkt über das `template`-Binding realisieren.
 
 ```html
 <form class="form_example">
-    <label for="Title">Title</label>
-    <input id="Title" data-bind="value: Title">    
+    <label for="title">Title</label>
+    <input id="title" data-bind="value: title">    
         
-    <label for="Message">Message</label>
-    <input id="Message" data-bind="value: Message">
+    <label for="message">Message</label>
+    <input id="message" data-bind="value: message">
 </form>    
     
 <div data-bind="template: {
     name: 'sticky-note-template',
     data: {
-        Title: Title,
-        Message: Message
+        title: title,
+        message: message
     }
 }"></div>
     
 <script type="text/html" id="sticky-note-template">  
     <div class="sticky_note">
         <div>
-            <h1 data-bind="text: Title"></h1>
-            <p data-bind="text: Message"></p>
+            <h1 data-bind="text: title"></h1>
+            <p data-bind="text: message"></p>
         </div>
     </div>  
 </script>

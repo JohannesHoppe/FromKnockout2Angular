@@ -44,6 +44,7 @@
     <Content Include="examples\01_bindings\angular2.js" />
     <Content Include="examples\02_templating\angular.html" />
     <Content Include="examples\02_templating\angular.js" />
+    <Content Include="examples\02_templating\angular.tmpl.html" />
     <Content Include="examples\02_templating\knockout.html" />
     <Content Include="examples\02_templating\knockout.js" />
     <Content Include="examples\fonts\BuxtonSketch.css" />

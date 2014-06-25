@@ -1,8 +1,8 @@
 ﻿$(function () {
 
     var ViewModel = function () {
-        this.Title = ko.observable('Remember');
-        this.Message = ko.observable('the milk');
+        this.title = ko.observable('Remember');
+        this.message = ko.observable('the milk');
     };
 
     var viewmodel = new ViewModel();

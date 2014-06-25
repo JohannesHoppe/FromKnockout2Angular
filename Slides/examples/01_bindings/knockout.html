@@ -16,8 +16,8 @@
     $(function () {
 
         var ViewModel = function () {
-            this.Title = ko.observable('Remember');
-            this.Message = ko.observable('the milk');
+            this.title = ko.observable('Remember');
+            this.message = ko.observable('the milk');
         };
 
         var viewmodel = new ViewModel();
@@ -27,17 +27,17 @@
 </script>
 
 <form class="form_example">
-    <label for="Title">Title</label>
-    <input id="Title" data-bind="value: Title">    
+    <label for="title">Title</label>
+    <input id="title" data-bind="value: title">    
         
-    <label for="Message">Message</label>
-    <input id="Message" data-bind="value: Message">
+    <label for="message">Message</label>
+    <input id="message" data-bind="value: message">
 </form>
          
 <div class="sticky_note">
     <div>
-        <h1 data-bind="text: Title"></h1>
-        <p data-bind="text: Message"></p>
+        <h1 data-bind="text: title"></h1>
+        <p data-bind="text: message"></p>
     </div>
 </div>
 
