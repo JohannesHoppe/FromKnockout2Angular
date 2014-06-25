@@ -7,8 +7,8 @@
 2. [Schwerpunkte](#Schwerpunkte)  
     2.1. [Bindings](#Bindings)
     2.2. [Templating](#Templating)
-    2.3. [Routing](#Routing)
-    2.4. [Modularer Code](#Modules)
+    2.3. [Modularer Code](#Modules)
+    2.4. [Routing](#Routing)
 3. [Fazit](#Fazit)     
 4. [Links](#links)  
 
@@ -27,7 +27,7 @@ In dieser Session (und mit dem Ihnen hier vorliegenden Handout) werden Knockout 
 
 Bei einer SPA-Architektur geht es im stets darum, möglichst viel Kontrollfluss- und Rendering-Logik vom Webserver auf den Browser zu bringen. Der Webserver liefert im Idealfall nur noch eine einziges HTML-Dokument aus, welches dann die Kontrolle übernimmt. Prinzipiell kann man die verschiedensten Entwurfsmuster (Pattern) auf diesem einzelnen HTML-Dokument anwenden. In der Praxis zeigt sich aber, dass das [MVC (Model-View-Controller)](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc) Pattern die bevorzugte Umsetzung ist. Diese Enwurfsmuster hat sich auf dem Server als Standard durchgesetzt. Es ist keine schlechte Idee, bewährtes auf den Browser zu übertragen. Ebenso bieten die meisten SPA-Frameworks eine [MVVM (Model-View-ViewModel)](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm) Engine an. Diese beiden Prinzipien ergänzen sich gut. Durch ihre große inhaltliche Überschneidung bietet es sich an, beide Prinzipien in einen Topf zu werfen und kräftig umzurühren. Genauso sehen es auch die Macher von AngularJS, welche ihr Framework ganz pragmatisch ein [MVW (Model-View-Whatever (works for you))](https://plus.google.com/+AngularJS/posts/aZNVhj355G2) Framework nennen.       
 
-Unter der Prämisse, das wir uns im Kontext einer **MVW** Anwendung bewegen, ist es legitim, folgende Schwerpunkte als Vergleichsgegenstand auszuwählen:
+Unter der Prämisse, das wir uns im Kontext einer **MVW** Anwendung bewegen, ist es sinnvoll, folgende Schwerpunkte als Vergleichsgegenstand auszuwählen:
 
 1. Bindings
 2. Templating
@@ -192,17 +192,58 @@ In Knockout kann man dies direkt über das `template`-Binding realisieren.
 </script>
 ```
 
-AngularJs 
+Eine gleichwertige Funktionalität kann man in AngularJs mit [**Custom Directives**](https://docs.angularjs.org/guide/directive) implementieren. Neben den bereits erwähnten Direktiven (z.B. `ngModel`) kann man durch einen einfachen Befehl eigene Direktiven spezifizieren. Bei der Gestaltungsfreiheit sind kaum Grenzen gesetzt, eine selbst erstellte Direktive kann auf einem DOM-Element, DOM-Attribut, einem CSS-Klassennamen oder einem Kommentar angewandt werden. Folgendes Beispiel verwendet ein DOM-Element "sticky-note", da der entstehende Quelltext so besonders einfach zu lesen ist.
 
-<a name="Routing"></a>
-## 2.3. Routing
+```html
+<form class="form_example">
+    <label for="title">Title</label>
+    <input id="title" ng-model="model.title">
+    
+    <label for="message">Message</label>
+    <input id="message" ng-model="model.message">
+</form> 
 
-[TODO]
+<sticky-note title="{{ model.title }}" message="{{ model.message }}"></sticky-note>
+```
+
+```js
+.directive('stickyNote', function () {
+    return {
+        restrict: 'E',  
+        replace: true,
+        scope: { 
+            title: '@',
+            message: '@',
+        },
+        templateUrl: 'angular.tmpl.html'
+    }
+});
+```
+Die Direktive ersetzt alle Elemente welche "sticky-note" heißen und wendet hierbar das aus `templateUrl` stammende Markup an. Der Inhalt aus "angular.tmpl.html" entspricht dem zuvor verwendeten Code:
+
+```html
+<div class="sticky_note">
+    <div>
+        <h1>{{title}}</h1>
+        <p>{{message}}</p>
+    </div>
+</div>
+```
+
+**Ist ein Wechsel möglich?**
+
+Der Wechsel von Knockout zu Angular sollte sich im Bezug auf exisistierende Ko-Templates relativ unproblematisch von Statten gehen. Es ist natürlich unerlässlich, existierende Ko-Bindungs auch hier zu portieren. Das Prinzip der Templates ist aber in beiden Frameworks vergleichbar und mit entsprechendem manuellen Aufwand ohne Überraschungen übertragbar. Im Vergleich zu den Templates von Knockout sind Angular-Direktiven viel flexibler, aber dennoch leicht und verständlich anzuwenden. Die guten Dokumentation zum Thema erleichert den Umstieg.       
 
 <a name="Modules"></a>
-## 2.4. Modularer Code
+## 2.3. Modularer Code
+
+Heutzutage sollte es Standard sein, Javascript-Code modular zu gliedern. Ein Modul kapselt zum einen Funktionalität und gibt zum anderen seine Abhängigkeiten bekannt. Ein Modul-Loader kann und wird dann diese Abhängigkeiten auflösen. Es haben sich zwei große 
+
+<a name="Routing"></a>
+## 2.4. Routing
 
 [TODO]
+
 
 
 <a name="links"></a>
@@ -214,8 +255,8 @@ MVC: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc
 MVVM: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm  
 MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2  
 Observer Pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript  
-$watch: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/
-
+$watch: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/  
+Creating Custom Directives: https://docs.angularjs.org/guide/directive
 
 Sie finden dieses Dokument auf: http://johanneshoppe.github.io/FromKnockout2Angular/Docs/
 Alle Demos sind in der Präsentation verlinkt: http://johanneshoppe.github.io/FromKnockout2Angular/Slides/  

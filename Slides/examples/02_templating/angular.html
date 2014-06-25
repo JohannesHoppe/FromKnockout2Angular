@@ -9,7 +9,6 @@
 </head>
   
 <!-- see https://docs.angularjs.org/guide/directive -->
-<!--START-->
 
 <body class="example" ng-controller="ExampleController">
 
@@ -20,11 +19,12 @@
         <label for="message">Message</label>
         <input id="message" ng-model="model.message">
     </form> 
-    
+ 
+<!--START-->   
     <sticky-note title="{{ model.title }}" message="{{ model.message }}"></sticky-note>
-         
+<!--STOP-->         
 </body>
 
-<!--STOP-->
+
 
 </html>
