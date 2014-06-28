@@ -8,7 +8,7 @@
     2.1. [Bindings](#Bindings)
     2.2. [Templating](#Templating)
     2.3. [Modularer Code](#Modules)
-    2.4. [Routing](#Routing)
+    <!--2.4. [Routing](#Routing)-->
 3. [Fazit](#Fazit)     
 4. [Links](#links)  
 
@@ -31,8 +31,8 @@ Unter der Prämisse, das wir uns im Kontext einer **MVW** Anwendung bewegen, ist
 
 1. Bindings
 2. Templating
-3. Routing
-4. Modularer Code
+3. Modularer Code
+<!--4. Routing-->
 
 ![Äpfel mit Birnen](images/apples_and_pears.png)
 
@@ -283,22 +283,49 @@ Man kann AMD/Require.js als [Service Locator](http://en.wikipedia.org/wiki/Servi
 
 Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl `angular.module()` erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte auf einander treffen:  
 .
-> **require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen.  
+> **require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen und wieder verwendet. Damit ist jedes AMD Modul ein Singleton.  
 
 .
 
-> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden.  
+> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden. Das fertige Objekt nennt man einen **Service**. Services sind stets Singletons.   
 
-Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenden Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt 
+Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenden Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt, folgende drei Provider erzeugen jeweils einen Service, der eine HelloWorld-Methode besitzt. 
+
+```js
+angular.module('exampleApp', [])
+ 
+    .service('helloWorldService', function() {
+        this.sayHello = function() {
+            return "Hello World!";
+        };
+    })
+ 
+    .factory('helloWorldFactory', function() {
+        return {
+            sayHello: function() {
+                return "Hello World!";
+            }
+        };
+    })
+    
+    .provider('helloWorldProvider', function () {
+
+        this.$get = function() {
+            return {
+                sayHello: function() {
+                    return "Hello World!";
+                }
+            }
+        };
+    })
+```
 
 
 
-
+<!--
 <a name="Routing"></a>
 ## 2.4. Routing
-
-[TODO]
-
+-->
 
 
 <a name="links"></a>
