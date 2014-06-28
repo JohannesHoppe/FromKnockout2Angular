@@ -49,7 +49,9 @@
     <Content Include="examples\02_templating\knockout.html" />
     <Content Include="examples\02_templating\knockout.js" />
     <Content Include="examples\03_modules\knockout.html" />
-    <Content Include="examples\03_modules\knockout.js" />
+    <Content Include="examples\03_modules\knockout.viewModel.js" />
+    <Content Include="examples\03_modules\require.config.js" />
+    <Content Include="examples\03_modules\require.init.js" />
     <Content Include="examples\fonts\BuxtonSketch.css" />
     <Content Include="examples\01_bindings\knockout.html" />
     <Content Include="examples\01_bindings\jQuery.html" />

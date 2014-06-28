@@ -88,6 +88,8 @@ Man sieht, dass auf die einzelnen HTML-Elemente umständlich zugriffen werden mu
  
 Die Hauptaufgabe eine MVVM Engine besteht darin den **View** (welcher in unserem Fall reines HTML ist) möglichst elegant mit dem so genannten **ViewModel** zu verbinden. Das **ViewModel** kann man als einen speziellen Controller sehen. Er stellt einerseits Daten der Geschäftslogik bzw. des Models zu Verfügung und stellt weiterhin auch Methoden für diese dar. Durch die Zwischenschicht "ViewModel", werden View und Model voneinander getrennt. Es ist nun irrelevant wo und wie das tatsächliche Model existiert. Das ViewModel "versteckt es" und stellt eine standardisierte Sicht darauf her. Häufig wird es der Fall sein, das das eigentliche Model nur auf dem Server wirklich greifbar ist. Hierzu leitet dann das ViewModel alle Operationen per **AJAX** an den Server weiter.
 
+### Knockout
+
 Diese Verbindung zwischen View und ViewModel nennt sich **Binding**, diese geht für gewöhnlich in beide Richtungen. Ändert sich das ViewModel, so wird der View aktualisiert. Ändert sich der Wert eines Interaktions-Elements (z.b. hier eines Input-Felds), so wird das ViewModel ebenso geändert. Genau dies geschieht in folgendem Beispiel, welches mit Knockout.js umgesetzt ist.
 
 ```html
@@ -124,6 +126,8 @@ Diese Verbindung zwischen View und ViewModel nennt sich **Binding**, diese geht 
 
 Bei Knockout verwendet man für die Two-Way-Bindings Objekte vom Typ `Observable`. Diese implementieren (wie der Name bereits suggeriert), das [Observer Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript). Entsprechend dazu werden die Bindungs auf HTML-Elemente mit dem data-Attribut `data-bind` spezifiziert.
 
+### Angular
+
 In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist jedoch die Tatsache, das noch weniger JavaScript geschrieben werden muss. Dies wird durch so genannte "[Directives](https://docs.angularjs.org/guide/directive)" / Direktiven ermöglicht. Direktiven sind Marker im HTML, welche dem HTML compiler (`$compile`) von AngularJS Instruktionen geben. Es wird dadurch eine sehr deklarative Beschreibung der Applikation möglich.
 
 ```html
@@ -153,7 +157,7 @@ In diesem Beispiel finden wir die Direktiven `ng-app`, welche eine Anwendung aut
 
 Es fällt auf, dass das Model keine Observables implementieren muss. Das obrige Beispiel ist ein wenig dirty, "model" ist in wirklichkeit nicht das Model, sondern ein neu erstelltes Property am `$scope`, welcher das eigentlich ViewModel ist. In der Dokumentation von AngularJS wird übrigens nicht zwischen "Model" und "ViewModel" unterschieden. ("typisch" **MVW**)      
 
-**Ist ein Wechsel möglich?**
+### Ist ein Wechsel möglich?
 
 Ein Austausch der MVVM Engines ist möglich, da AngularJS prinzipiell den Funktionsumfang von Knockout.js abdeckt und zusätzlich erweitert. Beide Engines verwenden den **DOM** als View, so dass nicht alles neu geschrieben werden muss. Die Direktiven können dabei helfen, die Anzahl an Code-Zeilen zu minimieren. Stolpersteine wird es definitiv durch den Umstand geben, dass ein AngularJS Model nicht "observable" ist. Dieses Prinzip nennt sich "**dirty checking**". Hinter den Szenen setzt AngularJS für jedes Binding eine so genannte `$watch` in eine Liste. ([Info zu $watch und $digest](http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/)) Die Watches werden verwendet um Änderungen zu erkennen. Hinzu kommen Standardfunktionalitäten wie `$timeout` oder `$http`, welche das dirty checking berücksichtigen. In den meisten Fällen werden Änderungen korrekt erkannt, aber intensive Tests sind notwendig um wirklich sicher zu sein.
 
@@ -162,6 +166,8 @@ Ein Austausch der MVVM Engines ist möglich, da AngularJS prinzipiell den Funkti
 ## 2.2. Templating
 
 In jeder Template-Sprache gibt es die Möglichkeit, repetitiven Code zu vermeiden. Im vorliegenden Beispiel bietet es sich z.B. an, den gelben Notizzettel auszulagern - damit dieser mehrfach verwendet werden kann.
+
+### Knockout
 
 In Knockout kann man dies direkt über das `template`-Binding realisieren. 
 
@@ -191,6 +197,8 @@ In Knockout kann man dies direkt über das `template`-Binding realisieren.
     </div>  
 </script>
 ```
+
+### Angular
 
 Eine gleichwertige Funktionalität kann man in AngularJs mit [**Custom Directives**](https://docs.angularjs.org/guide/directive) implementieren. Neben den bereits erwähnten Direktiven (z.B. `ngModel`) kann man durch einen einfachen Befehl eigene Direktiven spezifizieren. Bei der Gestaltungsfreiheit sind kaum Grenzen gesetzt, eine selbst erstellte Direktive kann auf einem DOM-Element, DOM-Attribut, einem CSS-Klassennamen oder einem Kommentar angewandt werden. Folgendes Beispiel verwendet ein DOM-Element "sticky-note", da der entstehende Quelltext so besonders einfach zu lesen ist.
 
@@ -230,14 +238,36 @@ Die Direktive ersetzt alle Elemente welche "sticky-note" heißen und wendet hier
 </div>
 ```
 
-**Ist ein Wechsel möglich?**
+### Ist ein Wechsel möglich?
 
 Der Wechsel von Knockout zu Angular sollte sich im Bezug auf exisistierende Ko-Templates relativ unproblematisch von Statten gehen. Es ist natürlich unerlässlich, existierende Ko-Bindungs auch hier zu portieren. Das Prinzip der Templates ist aber in beiden Frameworks vergleichbar und mit entsprechendem manuellen Aufwand ohne Überraschungen übertragbar. Im Vergleich zu den Templates von Knockout sind Angular-Direktiven viel flexibler, aber dennoch leicht und verständlich anzuwenden. Die guten Dokumentation zum Thema erleichert den Umstieg.       
 
 <a name="Modules"></a>
 ## 2.3. Modularer Code
 
-Heutzutage sollte es Standard sein, Javascript-Code modular zu gliedern. Ein Modul kapselt zum einen Funktionalität und gibt zum anderen seine Abhängigkeiten bekannt. Ein Modul-Loader kann und wird dann diese Abhängigkeiten auflösen. Es haben sich zwei große 
+Heutzutage sollte es Standard sein, Javascript-Code modular zu gliedern. Ein Modul kapselt zum einen Funktionalität und gibt zum anderen seine Abhängigkeiten bekannt. Module erlauben es, eine lose Kopplung zwischen Funktionalitäten zu erreichen - was allgemein als sauber Code gilt. Ein Modul-Loader kann dann diese Abhängigkeiten auflösen, sofern der Code das entsprechende Format implementiert. Im Browser hat sich das AMD (Asynchronous Module Definition) Format durchgesetzt, dessen Referenzimplementierung stellt [require.js](http://requirejs.org/) dar. Weiter JavaScript-Loader sind unter anderem [YepNope](http://yepnopejs.com/), [$script.js](https://github.com/ded/script.js/), [LABjs](https://github.com/getify/LABjs), [headjs](https://github.com/headjs/headjs), der Loader vom [Dojo Toolkit](http://dojotoolkit.org/) oder [curl.js](https://github.com/cujojs/curl). Neben AMD, welches für Szenarien im Browser ausgelegt ist (asynchrones nachladen), ist CommonJS ein alternatives Format, welches vor allem von Node.js verwendet wird.
+
+### Knockout        
+
+Knockout verlangt nicht die Verwendung von Modulen. Es steht dem Entwickler völlig frei, das ViewModel oder den Initialisierungs-Code nach eigenen Vorstellung zu strukturieren. (Dies führt leider dazu, das man viel KO-Code findet, der überhaupt nicht strukturiert ist.) Wird jedoch Knockout zu einem Zeitpunkt ausgeführt, an dem entweder der CommonJs oder ein AMD-Loader ausgeführt wurden, so präsentiert sich Knockout als entsprechendes Modul. (KO verwendet eine Variation des [UMD (Universal Module Definition)](https://github.com/umdjs/umd) patterns)
+
+In folgenden Beispiel sieht man, wie ein ViewModel als Abhängigkeit Knockout angibt. Dies funktioniert ohne spezielle Anpassungen:  
+
+```js
+require(['jquery', 'knockout', 'domReady!'], function ($, ko) {
+
+    var ViewModel = function () {
+        this.title = ko.observable('Remember');
+        this.message = ko.observable('the milk');
+    };
+
+    var viewmodel = new ViewModel();
+    ko.applyBindings(viewmodel);
+
+});
+```
+
+ Browser  
 
 <a name="Routing"></a>
 ## 2.4. Routing
