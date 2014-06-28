@@ -41,17 +41,45 @@
   <ItemGroup>
     <Content Include="examples\01_bindings\angular.html" />
     <Content Include="examples\01_bindings\angular2.html" />
-    <Content Include="examples\01_bindings\angular2.js" />
+    <Content Include="examples\01_bindings\angular2.js">
+      <DependentUpon>angular2.html</DependentUpon>
+    </Content>
     <Content Include="examples\02_templating\angular.html" />
-    <Content Include="examples\02_templating\angular.js" />
-    <Content Include="examples\02_templating\angular.tmpl.html" />
-    <Content Include="examples\02_templating\angular_short.js" />
+    <Content Include="examples\02_templating\angular.js">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
+    <Content Include="examples\02_templating\angular.tmpl.html">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
+    <Content Include="examples\02_templating\angular_short.js">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
     <Content Include="examples\02_templating\knockout.html" />
-    <Content Include="examples\02_templating\knockout.js" />
+    <Content Include="examples\02_templating\knockout.js">
+      <DependentUpon>knockout.html</DependentUpon>
+    </Content>
+    <Content Include="examples\03_modules\angular.html" />
+    <Content Include="examples\03_modules\angular.js">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
+    <Content Include="examples\03_modules\angular.tmpl.html">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
+    <Content Include="examples\03_modules\angular_provider.js">
+      <DependentUpon>angular_provider.html</DependentUpon>
+    </Content>
+    <Content Include="examples\03_modules\angular_short.js">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
+    <Content Include="examples\03_modules\angular_provider.html" />
     <Content Include="examples\03_modules\knockout.html" />
-    <Content Include="examples\03_modules\knockout.viewModel.js" />
+    <Content Include="examples\03_modules\knockout.viewModel.js">
+      <DependentUpon>knockout.html</DependentUpon>
+    </Content>
     <Content Include="examples\03_modules\require.config.js" />
-    <Content Include="examples\03_modules\require.init.js" />
+    <Content Include="examples\03_modules\knockout.init.js">
+      <DependentUpon>knockout.html</DependentUpon>
+    </Content>
     <Content Include="examples\fonts\BuxtonSketch.css" />
     <Content Include="examples\01_bindings\knockout.html" />
     <Content Include="examples\01_bindings\jQuery.html" />

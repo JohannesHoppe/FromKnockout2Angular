@@ -1,4 +1,4 @@
-﻿angular.module('ExampleApp', [])
+﻿angular.module('exampleApp', [])
 
     .directive('stickyNote', function () {
         return {

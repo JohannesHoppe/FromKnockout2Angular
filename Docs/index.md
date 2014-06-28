@@ -289,7 +289,7 @@ Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. A
 
 > **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden.  
 
-Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenen Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. 
+Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenen Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt 
 
 
 

@@ -1,4 +1,4 @@
-﻿angular.module('ExampleApp', [])
+﻿angular.module('exampleApp', [])
 
     .directive('stickyNote', function () {
         return {
@@ -23,7 +23,7 @@
         }
     })
 
-    .controller('ExampleController', function ($scope) {
+    .controller('exampleController', function ($scope) {
 
         $scope.model = {
             title: "Remember",

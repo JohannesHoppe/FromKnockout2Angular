@@ -1,5 +1,5 @@
-﻿angular.module('ExampleApp', [])
-    .controller('ExampleController', function ($scope) {
+﻿angular.module('exampleApp', [])
+    .controller('exampleController', function ($scope) {
 
         $scope.model = {
             title: "Remember",

@@ -1,16 +1,14 @@
 ﻿<!DOCTYPE html>
-<html ng-app="ExampleApp" >
+<html ng-app="exampleApp" >
 <head>
-    <title>NG Custom Directives Example</title>   
+    <title>NG AMD Example</title>   
     
     <link href="../style.css" rel="stylesheet" />
     <script src="../../js/angular-1.3.0/angular.js"></script>
     <script src="angular.js"></script>
 </head>
   
-<!-- see https://docs.angularjs.org/guide/directive -->
-
-<body class="example" ng-controller="ExampleController">
+<body class="example" ng-controller="exampleController">
 
     <form class="form_example">
         <label for="title">Title</label>
@@ -20,11 +18,8 @@
         <input id="message" ng-model="model.message">
     </form> 
  
-<!--START-->   
     <sticky-note title="{{ model.title }}" message="{{ model.message }}"></sticky-note>
-<!--STOP-->         
+
 </body>
-
-
 
 </html>
