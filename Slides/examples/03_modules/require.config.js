@@ -1,5 +1,4 @@
-﻿
-requirejs.config({
+﻿requirejs.config({
     //baseUrl: "js",
     paths: {
         'jquery': '../../js/jquery/jquery-1.11.1',

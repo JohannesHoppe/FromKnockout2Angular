@@ -245,11 +245,11 @@ Der Wechsel von Knockout zu Angular sollte sich im Bezug auf exisistierende Ko-T
 <a name="Modules"></a>
 ## 2.3. Modularer Code
 
-Heutzutage sollte es Standard sein, Javascript-Code modular zu gliedern. Ein Modul kapselt zum einen Funktionalität und gibt zum anderen seine Abhängigkeiten bekannt. Module erlauben es, eine lose Kopplung zwischen Funktionalitäten zu erreichen - was allgemein als sauber Code gilt. Ein Modul-Loader kann dann diese Abhängigkeiten auflösen, sofern der Code das entsprechende Format implementiert. Im Browser hat sich das AMD (Asynchronous Module Definition) Format durchgesetzt, dessen Referenzimplementierung stellt [require.js](http://requirejs.org/) dar. Weiter JavaScript-Loader sind unter anderem [YepNope](http://yepnopejs.com/), [$script.js](https://github.com/ded/script.js/), [LABjs](https://github.com/getify/LABjs), [headjs](https://github.com/headjs/headjs), der Loader vom [Dojo Toolkit](http://dojotoolkit.org/) oder [curl.js](https://github.com/cujojs/curl). Neben AMD, welches für Szenarien im Browser ausgelegt ist (asynchrones nachladen), ist CommonJS ein alternatives Format, welches vor allem von Node.js verwendet wird.
+Heutzutage sollte es Standard sein, Javascript-Code modular zu gliedern. Ein Modul kapselt zum einen Funktionalität und gibt zum anderen seine Abhängigkeiten bekannt. Module erlauben es, eine lose Kopplung zwischen Funktionalitäten zu erreichen - was allgemein als sauber Code gilt. Ein Modul-Loader kann dann diese Abhängigkeiten auflösen, sofern der Code das entsprechende Format implementiert. Im Browser hat sich das AMD (Asynchronous Module Definition) Format durchgesetzt, dessen Referenzimplementierung stellt [require.js](http://requirejs.org/) dar. Weiter JavaScript-Loader sind unter anderem [YepNope](http://yepnopejs.com/), [$script.js](https://github.com/ded/script.js/), [LABjs](https://github.com/getify/LABjs), [headjs](https://github.com/headjs/headjs), der Loader vom [Dojo Toolkit](http://dojotoolkit.org/) oder [curl.js](https://github.com/cujojs/curl). Neben AMD, welches für Szenarien **im Browser** ausgelegt ist (asynchrones nachladen), ist CommonJS ein alternatives Format, welches vor allem von Node.js **auf dem Server** verwendet wird.
 
 ### Knockout        
 
-Knockout verlangt nicht die Verwendung von Modulen. Es steht dem Entwickler völlig frei, das ViewModel oder den Initialisierungs-Code nach eigenen Vorstellung zu strukturieren. (Dies führt leider dazu, das man viel KO-Code findet, der überhaupt nicht strukturiert ist.) Wird jedoch Knockout zu einem Zeitpunkt ausgeführt, an dem entweder der CommonJs oder ein AMD-Loader ausgeführt wurden, so präsentiert sich Knockout als entsprechendes Modul. (KO verwendet eine Variation des [UMD (Universal Module Definition)](https://github.com/umdjs/umd) patterns)
+Knockout verlangt nicht die Verwendung von Modulen. Es steht dem Entwickler völlig frei, das ViewModel oder den Initialisierungs-Code nach eigenen Vorstellung zu strukturieren. (Dies führt leider dazu, das man viel KO-Code findet, der überhaupt nicht strukturiert ist.) Wird jedoch Knockout zu einem Zeitpunkt ausgeführt, an dem entweder der CommonJs oder ein AMD-Loader (wie z.B. require.js) ausgeführt wurden, so präsentiert sich Knockout als **entsprechendes Modul**. (KO verwendet eine Variation des [UMD (Universal Module Definition)](https://github.com/umdjs/umd) patterns)
 
 In folgenden Beispiel sieht man, wie ein ViewModel als Abhängigkeit Knockout angibt. Dies funktioniert ohne spezielle Anpassungen:  
 
@@ -267,7 +267,32 @@ require(['jquery', 'knockout', 'domReady!'], function ($, ko) {
 });
 ```
 
- Browser  
+Anders als AngularJS übernimmt Knockout aber nie die Führung. Es verseht sich selbst als eines von vielen Modulen einer Applikation und überlässt es dem Entwickler eine mehr oder weniger modulare Archtitektur zu gestalten.
+
+### AMD ist nur ein klein wenig Dependency Injection
+
+Das AMD-Pattern thematisiert vor allem die Isolation von Code und das Nachladen von Code als definierte Abhängigkeit (Dependency). AMD gibt jedoch keine Vorgaben darüber, was der Inhalt eines Moduls ist. Es herrscht die gleiche Freiheit, wie bei allen anderen JavaScript-Objekten. Man kann z.B. einfache [Key-Value Pairs](http://requirejs.org/docs/api.html#defsimple) oder komplexe [Objekte](http://requirejs.org/docs/api.html#defdep) als "Typ" des Moduls definieren. Dies ist jedoch auch die Crux an AMD: Module sind jede Art von JavaScript Objekt. Es ist erst nach Studium der entsprechenden Dokumentation (oder des Quelltextes) klar, ob
+
+* a) das zurück gelieferte Modul Properties besitzt, die direkt verwendet werden sollen (sich das Modul also wie ein Singleton verhält),  
+* b) es als Funktion aufgerufen werden soll oder
+* c) es sich um eine Konstruktur-Funktion handelt, welche mit dem `new` Schlüsselwort aufgerufen werden soll.  
+
+Man kann AMD/Require.js als [Service Locator](http://en.wikipedia.org/wiki/Service_locator_pattern) verstehen. Das Austauschen von Dependencies zu Testzwecken ist zwar möglich (wie [z.B hier](http://bocoup.com/weblog/effective-unit-testing-with-amd/) beschrieben) aber doch ein wenig umständlich. Man kann die Arbeit mit AMD eher als "Dependency Injection"-Light bezeichnen. Schließlich bekommt man nicht immer fertig instanziierte Abhängigkeiten, sondern muss die Module ggf. selbst erst instanziieren. Es fehlen schlicht strikte Vorgaben im AMD-Format, die es erlauben würden, das Modul direkt durch den Modul-Loader instanziieren zu lassen.        
+
+### Angular
+
+Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl `angular.module()` erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte aufeinder treffen:  
+.
+> **require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen.  
+
+.
+
+> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden.  
+
+Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenen Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. 
+
+
+
 
 <a name="Routing"></a>
 ## 2.4. Routing
