@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dokumentation: Von Knockout zu AngularJS</title>
+<title>index</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 /* This file is deliberately empty */
@@ -79,6 +79,7 @@
 <p><a href="../Slides/examples/01_bindings/jQuery.html">Demo</a></p>
 <p>Man sieht, dass auf die einzelnen HTML-Elemente umständlich zugriffen werden muss. Eine deutliche Vereinfachung bietet hier MVVM. </p>
 <p>Die Hauptaufgabe eine MVVM Engine besteht darin den <strong>View</strong> (welcher in unserem Fall reines HTML ist) möglichst elegant mit dem so genannten <strong>ViewModel</strong> zu verbinden. Das <strong>ViewModel</strong> kann man als einen speziellen Controller sehen. Er stellt einerseits Daten der Geschäftslogik bzw. des Models zu Verfügung und stellt weiterhin auch Methoden für diese dar. Durch die Zwischenschicht &quot;ViewModel&quot;, werden View und Model voneinander getrennt. Es ist nun irrelevant wo und wie das tatsächliche Model existiert. Das ViewModel &quot;versteckt es&quot; und stellt eine standardisierte Sicht darauf her. Häufig wird es der Fall sein, das das eigentliche Model nur auf dem Server wirklich greifbar ist. Hierzu leitet dann das ViewModel alle Operationen per <strong>AJAX</strong> an den Server weiter.</p>
+<h3 id="knockout">Knockout</h3>
 <p>Diese Verbindung zwischen View und ViewModel nennt sich <strong>Binding</strong>, diese geht für gewöhnlich in beide Richtungen. Ändert sich das ViewModel, so wird der View aktualisiert. Ändert sich der Wert eines Interaktions-Elements (z.b. hier eines Input-Felds), so wird das ViewModel ebenso geändert. Genau dies geschieht in folgendem Beispiel, welches mit Knockout.js umgesetzt ist.</p>
 <pre><code class="lang-html">&lt;script&gt;
     $(function () {
@@ -110,6 +111,7 @@
 &lt;/div&gt;</code></pre>
 <p><a href="../Slides/examples/01_bindings/knockout.html">Demo</a>  </p>
 <p>Bei Knockout verwendet man für die Two-Way-Bindings Objekte vom Typ <code>Observable</code>. Diese implementieren (wie der Name bereits suggeriert), das <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript">Observer Pattern</a>. Entsprechend dazu werden die Bindungs auf HTML-Elemente mit dem data-Attribut <code>data-bind</code> spezifiziert.</p>
+<h3 id="angular">Angular</h3>
 <p>In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist jedoch die Tatsache, das noch weniger JavaScript geschrieben werden muss. Dies wird durch so genannte &quot;<a href="https://docs.angularjs.org/guide/directive">Directives</a>&quot; / Direktiven ermöglicht. Direktiven sind Marker im HTML, welche dem HTML compiler (<code>$compile</code>) von AngularJS Instruktionen geben. Es wird dadurch eine sehr deklarative Beschreibung der Applikation möglich.</p>
 <pre><code class="lang-html">&lt;body class=&quot;example&quot; ng-app&gt;
 
@@ -132,11 +134,12 @@
 <p><a href="../Slides/examples/01_bindings/angular.html">Demo</a><br><a href="../Slides/examples/01_bindings/angular2.html">Demo2</a> </p>
 <p>In diesem Beispiel finden wir die Direktiven <code>ng-app</code>, welche eine Anwendung automatisch bereitstellt (&quot;auto-bootstrap&quot;), <code>ng-init</code>, welche Code ausführt (eval) und hier z.B. quick-and-dirty ein Model setzt und <code>ng-model</code>, welche den View und das Model per Two-Way-Binding verbindet. </p>
 <p>Es fällt auf, dass das Model keine Observables implementieren muss. Das obrige Beispiel ist ein wenig dirty, &quot;model&quot; ist in wirklichkeit nicht das Model, sondern ein neu erstelltes Property am <code>$scope</code>, welcher das eigentlich ViewModel ist. In der Dokumentation von AngularJS wird übrigens nicht zwischen &quot;Model&quot; und &quot;ViewModel&quot; unterschieden. (&quot;typisch&quot; <strong>MVW</strong>)      </p>
-<p><strong>Ist ein Wechsel möglich?</strong></p>
+<h3 id="ist-ein-wechsel-m-glich-">Ist ein Wechsel möglich?</h3>
 <p>Ein Austausch der MVVM Engines ist möglich, da AngularJS prinzipiell den Funktionsumfang von Knockout.js abdeckt und zusätzlich erweitert. Beide Engines verwenden den <strong>DOM</strong> als View, so dass nicht alles neu geschrieben werden muss. Die Direktiven können dabei helfen, die Anzahl an Code-Zeilen zu minimieren. Stolpersteine wird es definitiv durch den Umstand geben, dass ein AngularJS Model nicht &quot;observable&quot; ist. Dieses Prinzip nennt sich &quot;<strong>dirty checking</strong>&quot;. Hinter den Szenen setzt AngularJS für jedes Binding eine so genannte <code>$watch</code> in eine Liste. (<a href="http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/">Info zu $watch und $digest</a>) Die Watches werden verwendet um Änderungen zu erkennen. Hinzu kommen Standardfunktionalitäten wie <code>$timeout</code> oder <code>$http</code>, welche das dirty checking berücksichtigen. In den meisten Fällen werden Änderungen korrekt erkannt, aber intensive Tests sind notwendig um wirklich sicher zu sein.</p>
 <p><a name="Templating"></a></p>
 <h2 id="2-2-templating">2.2. Templating</h2>
 <p>In jeder Template-Sprache gibt es die Möglichkeit, repetitiven Code zu vermeiden. Im vorliegenden Beispiel bietet es sich z.B. an, den gelben Notizzettel auszulagern - damit dieser mehrfach verwendet werden kann.</p>
+<h3 id="knockout">Knockout</h3>
 <p>In Knockout kann man dies direkt über das <code>template</code>-Binding realisieren. </p>
 <pre><code class="lang-html">&lt;form class=&quot;form_example&quot;&gt;
     &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
@@ -162,6 +165,7 @@
         &lt;/div&gt;
     &lt;/div&gt;  
 &lt;/script&gt;</code></pre>
+<h3 id="angular">Angular</h3>
 <p>Eine gleichwertige Funktionalität kann man in AngularJs mit <a href="https://docs.angularjs.org/guide/directive"><strong>Custom Directives</strong></a> implementieren. Neben den bereits erwähnten Direktiven (z.B. <code>ngModel</code>) kann man durch einen einfachen Befehl eigene Direktiven spezifizieren. Bei der Gestaltungsfreiheit sind kaum Grenzen gesetzt, eine selbst erstellte Direktive kann auf einem DOM-Element, DOM-Attribut, einem CSS-Klassennamen oder einem Kommentar angewandt werden. Folgendes Beispiel verwendet ein DOM-Element &quot;sticky-note&quot;, da der entstehende Quelltext so besonders einfach zu lesen ist.</p>
 <pre><code class="lang-html">&lt;form class=&quot;form_example&quot;&gt;
     &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
@@ -190,11 +194,44 @@
         &lt;p&gt;{{message}}&lt;/p&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-<p><strong>Ist ein Wechsel möglich?</strong></p>
+<h3 id="ist-ein-wechsel-m-glich-">Ist ein Wechsel möglich?</h3>
 <p>Der Wechsel von Knockout zu Angular sollte sich im Bezug auf exisistierende Ko-Templates relativ unproblematisch von Statten gehen. Es ist natürlich unerlässlich, existierende Ko-Bindungs auch hier zu portieren. Das Prinzip der Templates ist aber in beiden Frameworks vergleichbar und mit entsprechendem manuellen Aufwand ohne Überraschungen übertragbar. Im Vergleich zu den Templates von Knockout sind Angular-Direktiven viel flexibler, aber dennoch leicht und verständlich anzuwenden. Die guten Dokumentation zum Thema erleichert den Umstieg.       </p>
 <p><a name="Modules"></a></p>
 <h2 id="2-3-modularer-code">2.3. Modularer Code</h2>
-<p>[TODO]</p>
+<p>Heutzutage sollte es Standard sein, Javascript-Code modular zu gliedern. Ein Modul kapselt zum einen Funktionalität und gibt zum anderen seine Abhängigkeiten bekannt. Module erlauben es, eine lose Kopplung zwischen Funktionalitäten zu erreichen - was allgemein als sauber Code gilt. Ein Modul-Loader kann dann diese Abhängigkeiten auflösen, sofern der Code das entsprechende Format implementiert. Im Browser hat sich das AMD (Asynchronous Module Definition) Format durchgesetzt, dessen Referenzimplementierung stellt <a href="http://requirejs.org/">require.js</a> dar. Weiter JavaScript-Loader sind unter anderem <a href="http://yepnopejs.com/">YepNope</a>, <a href="https://github.com/ded/script.js/">$script.js</a>, <a href="https://github.com/getify/LABjs">LABjs</a>, <a href="https://github.com/headjs/headjs">headjs</a>, der Loader vom <a href="http://dojotoolkit.org/">Dojo Toolkit</a> oder <a href="https://github.com/cujojs/curl">curl.js</a>. Neben AMD, welches für Szenarien <strong>im Browser</strong> ausgelegt ist (asynchrones nachladen), ist CommonJS ein alternatives Format, welches vor allem von Node.js <strong>auf dem Server</strong> verwendet wird.</p>
+<h3 id="knockout">Knockout</h3>
+<p>Knockout verlangt nicht die Verwendung von Modulen. Es steht dem Entwickler völlig frei, das ViewModel oder den Initialisierungs-Code nach eigenen Vorstellung zu strukturieren. (Dies führt leider dazu, das man viel KO-Code findet, der überhaupt nicht strukturiert ist.) Wird jedoch Knockout zu einem Zeitpunkt ausgeführt, an dem entweder der CommonJs oder ein AMD-Loader (wie z.B. require.js) ausgeführt wurden, so präsentiert sich Knockout als <strong>entsprechendes Modul</strong>. (KO verwendet eine Variation des <a href="https://github.com/umdjs/umd">UMD (Universal Module Definition)</a> patterns)</p>
+<p>In folgenden Beispiel sieht man, wie ein ViewModel als Abhängigkeit Knockout angibt. Dies funktioniert ohne spezielle Anpassungen:  </p>
+<pre><code class="lang-js">require([&#39;jquery&#39;, &#39;knockout&#39;, &#39;domReady!&#39;], function ($, ko) {
+
+    var ViewModel = function () {
+        this.title = ko.observable(&#39;Remember&#39;);
+        this.message = ko.observable(&#39;the milk&#39;);
+    };
+
+    var viewmodel = new ViewModel();
+    ko.applyBindings(viewmodel);
+
+});</code></pre>
+<p>Anders als AngularJS übernimmt Knockout aber nie die Führung. Es verseht sich selbst als eines von vielen Modulen einer Applikation und überlässt es dem Entwickler eine mehr oder weniger modulare Archtitektur zu gestalten.</p>
+<h3 id="amd-ist-nur-ein-klein-wenig-dependency-injection">AMD ist nur ein klein wenig Dependency Injection</h3>
+<p>Das AMD-Pattern thematisiert vor allem die Isolation von Code und das Nachladen von Code als definierte Abhängigkeit (Dependency). AMD gibt jedoch keine Vorgaben darüber, was der Inhalt eines Moduls ist. Es herrscht die gleiche Freiheit, wie bei allen anderen JavaScript-Objekten. Man kann z.B. einfache <a href="http://requirejs.org/docs/api.html#defsimple">Key-Value Pairs</a> oder komplexe <a href="http://requirejs.org/docs/api.html#defdep">Objekte</a> als &quot;Typ&quot; des Moduls definieren. Dies ist jedoch auch die Crux an AMD: Module sind jede Art von JavaScript Objekt. Es ist erst nach Studium der entsprechenden Dokumentation (oder des Quelltextes) klar, ob</p>
+<ul>
+<li>a) das zurück gelieferte Modul Properties besitzt, die direkt verwendet werden sollen (sich das Modul also wie ein Singleton verhält),  </li>
+<li>b) es als Funktion aufgerufen werden soll oder</li>
+<li>c) es sich um eine Konstruktur-Funktion handelt, welche mit dem <code>new</code> Schlüsselwort aufgerufen werden soll.  </li>
+</ul>
+<p>Man kann AMD/Require.js als <a href="http://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator</a> verstehen. Das Austauschen von Dependencies zu Testzwecken ist zwar möglich (wie <a href="http://bocoup.com/weblog/effective-unit-testing-with-amd/">z.B hier</a> beschrieben) aber doch ein wenig umständlich. Man kann die Arbeit mit AMD eher als &quot;Dependency Injection&quot;-Light bezeichnen. Schließlich bekommt man nicht immer fertig instanziierte Abhängigkeiten, sondern muss die Module ggf. selbst erst instanziieren. Es fehlen schlicht strikte Vorgaben im AMD-Format, die es erlauben würden, das Modul direkt durch den Modul-Loader instanziieren zu lassen.        </p>
+<h3 id="angular">Angular</h3>
+<p>Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl <code>angular.module()</code> erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte auf einander treffen:<br>.</p>
+<blockquote>
+<p><strong>require.js</strong> regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen.  </p>
+</blockquote>
+<p>.</p>
+<blockquote>
+<p><strong>AngularJS-Module</strong> konfigurieren mithilfe der verschiedenen Methoden des <a href="https://docs.angularjs.org/api/auto/service/$provide">$provide</a>-service den <a href="https://docs.angularjs.org/api/auto/service/$injector">$injector</a>, welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden.  </p>
+</blockquote>
+<p>Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenden Konventionen, so das man hier von echter &quot;Dependency Injecton&quot; - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory &amp; Provider) ist, wird im <a href="https://docs.angularjs.org/guide/providers">Developer Guide</a> ausführlich beschrieben. Kurz gesagt </p>
 <p><a name="Routing"></a></p>
 <h2 id="2-4-routing">2.4. Routing</h2>
 <p>[TODO]</p>
@@ -208,4 +245,4 @@
 
 </body>
 </html>
-
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

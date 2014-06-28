@@ -281,7 +281,7 @@ Man kann AMD/Require.js als [Service Locator](http://en.wikipedia.org/wiki/Servi
 
 ### Angular
 
-Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl `angular.module()` erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte aufeinder treffen:  
+Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl `angular.module()` erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte auf einander treffen:  
 .
 > **require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen.  
 
@@ -289,7 +289,7 @@ Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. A
 
 > **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden.  
 
-Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenen Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt 
+Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenden Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt 
 
 
 
