@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>index</title>
+<title>Dokumentation: Von Knockout zu AngularJS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 /* This file is deliberately empty */
@@ -18,7 +18,7 @@
 <h5 id="table-of-contents">Table of Contents</h5>
 <ol>
 <li><a href="#Einleitung">Einleitung</a>  </li>
-<li><a href="#Schwerpunkte">Schwerpunkte</a><br> 2.1. <a href="#Bindings">Bindings</a><br> 2.2. <a href="#Templating">Templating</a><br> 2.3. <a href="#Modules">Modularer Code</a><br> 2.4. <a href="#Routing">Routing</a></li>
+<li><a href="#Schwerpunkte">Schwerpunkte</a><br> 2.1. <a href="#Bindings">Bindings</a><br> 2.2. <a href="#Templating">Templating</a><br> 2.3. <a href="#Modules">Modularer Code</a> <!--2.4. [Routing](#Routing)--></li>
 <li><a href="#Fazit">Fazit</a>     </li>
 <li><a href="#links">Links</a>  </li>
 </ol>
@@ -34,8 +34,9 @@
 <ol>
 <li>Bindings</li>
 <li>Templating</li>
-<li>Routing</li>
-<li>Modularer Code</li>
+<li>Modularer Code<!--4. Routing-->
+
+</li>
 </ol>
 <p><img src="images/apples_and_pears.png" alt="Äpfel mit Birnen"></p>
 <p>Es bleibt ein kleines Dilemma. Knockout.js und AngularJS sind eigentlich nicht miteinander vergleichbar. Wie Äpfel und Birnen haben beide Frameworks einen unterschiedlichen Schwerpunkt. AngularJS hat den Anspruch ein universales JavaScript-Framework für SPAs zu sein, Knockout hingegeben beschränkt sich hingegen darauf, eine MVVM Engine zur Verfügung zu stellen. Für einen fairen Vergleich lönnte man z.B. eher <a href="http://durandaljs.com/">Durandal</a> und AngularJS miteinander messen.   </p>
@@ -165,6 +166,7 @@
         &lt;/div&gt;
     &lt;/div&gt;  
 &lt;/script&gt;</code></pre>
+<p><a href="../Slides/examples/02_templating/knockout.html">Demo</a> </p>
 <h3 id="angular">Angular</h3>
 <p>Eine gleichwertige Funktionalität kann man in AngularJs mit <a href="https://docs.angularjs.org/guide/directive"><strong>Custom Directives</strong></a> implementieren. Neben den bereits erwähnten Direktiven (z.B. <code>ngModel</code>) kann man durch einen einfachen Befehl eigene Direktiven spezifizieren. Bei der Gestaltungsfreiheit sind kaum Grenzen gesetzt, eine selbst erstellte Direktive kann auf einem DOM-Element, DOM-Attribut, einem CSS-Klassennamen oder einem Kommentar angewandt werden. Folgendes Beispiel verwendet ein DOM-Element &quot;sticky-note&quot;, da der entstehende Quelltext so besonders einfach zu lesen ist.</p>
 <pre><code class="lang-html">&lt;form class=&quot;form_example&quot;&gt;
@@ -194,6 +196,7 @@
         &lt;p&gt;{{message}}&lt;/p&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
+<p><a href="../Slides/examples/02_templating/angular.html">Demo</a> </p>
 <h3 id="ist-ein-wechsel-m-glich-">Ist ein Wechsel möglich?</h3>
 <p>Der Wechsel von Knockout zu Angular sollte sich im Bezug auf exisistierende Ko-Templates relativ unproblematisch von Statten gehen. Es ist natürlich unerlässlich, existierende Ko-Bindungs auch hier zu portieren. Das Prinzip der Templates ist aber in beiden Frameworks vergleichbar und mit entsprechendem manuellen Aufwand ohne Überraschungen übertragbar. Im Vergleich zu den Templates von Knockout sind Angular-Direktiven viel flexibler, aber dennoch leicht und verständlich anzuwenden. Die guten Dokumentation zum Thema erleichert den Umstieg.       </p>
 <p><a name="Modules"></a></p>
@@ -213,28 +216,105 @@
     ko.applyBindings(viewmodel);
 
 });</code></pre>
+<p><a href="../Slides/examples/03_modules/knockout.html">Demo</a></p>
 <p>Anders als AngularJS übernimmt Knockout aber nie die Führung. Es verseht sich selbst als eines von vielen Modulen einer Applikation und überlässt es dem Entwickler eine mehr oder weniger modulare Archtitektur zu gestalten.</p>
 <h3 id="amd-ist-nur-ein-klein-wenig-dependency-injection">AMD ist nur ein klein wenig Dependency Injection</h3>
 <p>Das AMD-Pattern thematisiert vor allem die Isolation von Code und das Nachladen von Code als definierte Abhängigkeit (Dependency). AMD gibt jedoch keine Vorgaben darüber, was der Inhalt eines Moduls ist. Es herrscht die gleiche Freiheit, wie bei allen anderen JavaScript-Objekten. Man kann z.B. einfache <a href="http://requirejs.org/docs/api.html#defsimple">Key-Value Pairs</a> oder komplexe <a href="http://requirejs.org/docs/api.html#defdep">Objekte</a> als &quot;Typ&quot; des Moduls definieren. Dies ist jedoch auch die Crux an AMD: Module sind jede Art von JavaScript Objekt. Es ist erst nach Studium der entsprechenden Dokumentation (oder des Quelltextes) klar, ob</p>
 <ul>
 <li>a) das zurück gelieferte Modul Properties besitzt, die direkt verwendet werden sollen (sich das Modul also wie ein Singleton verhält),  </li>
 <li>b) es als Funktion aufgerufen werden soll oder</li>
-<li>c) es sich um eine Konstruktur-Funktion handelt, welche mit dem <code>new</code> Schlüsselwort aufgerufen werden soll.  </li>
+<li>c) es sich um eine z.B. Konstruktur-Funktion handelt, welche mit dem <code>new</code> Schlüsselwort aufgerufen werden soll.  </li>
 </ul>
-<p>Man kann AMD/Require.js als <a href="http://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator</a> verstehen. Das Austauschen von Dependencies zu Testzwecken ist zwar möglich (wie <a href="http://bocoup.com/weblog/effective-unit-testing-with-amd/">z.B hier</a> beschrieben) aber doch ein wenig umständlich. Man kann die Arbeit mit AMD eher als &quot;Dependency Injection&quot;-Light bezeichnen. Schließlich bekommt man nicht immer fertig instanziierte Abhängigkeiten, sondern muss die Module ggf. selbst erst instanziieren. Es fehlen schlicht strikte Vorgaben im AMD-Format, die es erlauben würden, das Modul direkt durch den Modul-Loader instanziieren zu lassen.        </p>
+<p>Man kann AMD/Require.js als puristischen <a href="http://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator</a> verstehen. Das Austauschen von Dependencies zu Testzwecken ist zwar möglich (wie <a href="http://bocoup.com/weblog/effective-unit-testing-with-amd/">z.B hier</a> beschrieben) aber doch ein wenig umständlich. Man kann die Arbeit mit AMD eher als &quot;Dependency Injection&quot;-Light bezeichnen. Schließlich bekommt man auch nicht immer fertig instanziierte Abhängigkeiten, sondern muss die Module oder Properties/Teile des Moduls ggf. selbst erst instanziieren. Es fehlen schlicht strikte Vorgaben im AMD-Format, die es erlauben würden, das Modul bzw. Teile des Moduls direkt durch den Modul-Loader instanziieren zu lassen.        </p>
 <h3 id="angular">Angular</h3>
 <p>Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl <code>angular.module()</code> erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte auf einander treffen:<br>.</p>
 <blockquote>
-<p><strong>require.js</strong> regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen.  </p>
+<p><strong>AMD/require.js</strong> regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen und wieder verwendet. Damit ist jedes AMD Modul effektiv ein Singleton.  </p>
 </blockquote>
 <p>.</p>
 <blockquote>
-<p><strong>AngularJS-Module</strong> konfigurieren mithilfe der verschiedenen Methoden des <a href="https://docs.angularjs.org/api/auto/service/$provide">$provide</a>-service den <a href="https://docs.angularjs.org/api/auto/service/$injector">$injector</a>, welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden.  </p>
+<p><strong>AngularJS-Module</strong> konfigurieren mithilfe der verschiedenen Methoden des <a href="https://docs.angularjs.org/api/auto/service/$provide">$provide</a>-service den <a href="https://docs.angularjs.org/api/auto/service/$injector">$injector</a>, welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch weitere Module laden. Das fertige Objekt nennt man einen <strong>Service</strong>. Services sind stets Singletons.   </p>
 </blockquote>
-<p>Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenden Konventionen, so das man hier von echter &quot;Dependency Injecton&quot; - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory &amp; Provider) ist, wird im <a href="https://docs.angularjs.org/guide/providers">Developer Guide</a> ausführlich beschrieben. Kurz gesagt </p>
-<p><a name="Routing"></a></p>
-<h2 id="2-4-routing">2.4. Routing</h2>
-<p>[TODO]</p>
+<p>In AMD erhält man ein Modul. Es gibt keine weiteren Vorgaben. </p>
+<p>Bei Angular erhält man ein Modul, das mehrere <strong>benannte</strong> Services enthalten kann. Durch diese einzuhaltende Konventionen, kann man eine vollwertige &quot;Dependency Injecton&quot; - besonders im Sinne der Testbarkeit - erreichen. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory &amp; Provider) ist, wird im <a href="https://docs.angularjs.org/guide/providers">Developer Guide</a> ausführlich beschrieben. Kurz gesagt, folgende drei Provider erzeugen jeweils einen Service, der eine HelloWorld-Methode besitzt. </p>
+<pre><code class="lang-js">angular.module(&#39;exampleApp&#39;, [])
+
+    .service(&#39;helloWorldService&#39;, function() {
+        this.sayHello = function() {
+            return &quot;Hello World!&quot;;
+        };
+    })
+
+    .factory(&#39;helloWorldFactory&#39;, function() {
+        return {
+            sayHello: function() {
+                return &quot;Hello World!&quot;;
+            }
+        };
+    })
+
+    .provider(&#39;helloWorldProvider&#39;, function () {
+
+        this.$get = function() {
+            return {
+                sayHello: function() {
+                    return &quot;Hello World!&quot;;
+                }
+            }
+        };
+    })</code></pre>
+<p>Möchte man nun die Funktionalität der Services nutzen, so kann man diesen Service als Funktionsparameter akzeptieren:</p>
+<pre><code class="lang-js">angular.module(&#39;exampleApp&#39;)
+
+    .controller(&#39;exampleController&#39;, function ($scope, helloWorldService) {
+        $scope.hello = helloWorldService.sayHello();
+    });</code></pre>
+<p><a href="../Slides/examples/03_modules/angular_provider.html">Demo</a></p>
+<p>Vor dem Aufruf des Kontrollers prüft der $injector die Signatur der Funktion (mit .toString()) und &quot;injected&quot; dann den gewünschten Service. Es ist demnacht sehr wichtig, auf die exakte Schreibweise der Funktionsparameter zu achten. Eine vergleichbare komfortable Verwendung kennt AMD nicht.</p>
+<h3 id="ist-ein-wechsel-m-glich-">Ist ein Wechsel möglich?</h3>
+<p>Wie sich gezeigt hat, sind AMD-Module und Angular-Module zwei Konzepte, die unterschiedliche Schwerpunkte setzen. Mit ein paar kleinen Anpassungen lassen sich beide Konzepte kombinieren. So kann AMD-Code aus der Knockout-Welt in die Angular-Welt überführt werden. Dies ist dringend empfohlen, denn es sehr unpraktikabel bzw. fehleranfällig synchron und asynchron ausgelegten Code miteinander zu kombinieren. (Man setzt entweder ganz auf AMD oder gar nicht auf AMD!)</p>
+<p>Man kann jedoch nicht mehr die <code>ng-app</code> Direktive verwenden, da diese im Zuge des <a href="https://docs.angularjs.org/guide/bootstrap">automatischen Bootstrappings</a> bereits beim Browser-Event <a href="https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded"><code>DOMContentLoaded</code></a> ausgewertet wird. Zu diesem Zeitpunkt sind die asynchronen Module aber noch gar nicht geladen.</p>
+<p>Daher sollte man das Bootstrapping erst dann starten, wenn require.js alle Module geladen hat. Hierfür bietet sich das Standard-Modul <code>documentReady</code> an. Nun ist es ohne Probleme möglich, ein Angular-Modul durch ein AMD-Modul zu umhüllen:</p>
+<pre><code class="lang-js">// AMD Modul
+define([&#39;require&#39;, &#39;angular&#39;], function (require, angular) {
+
+    // Angular Modul
+    angular.module(&#39;exampleApp&#39;, [])
+
+        .directive(&#39;stickyNote&#39;, function () {
+            return {
+                restrict: &#39;E&#39;,
+                replace: true,
+                scope: {
+                    title: &#39;@&#39;,
+                    message: &#39;@&#39;,
+                },
+                templateUrl: &#39;angular.tmpl.html&#39;
+            }
+        })
+
+        .controller(&#39;exampleController&#39;, function ($scope) {
+
+            $scope.model = {
+                title: &quot;Remember&quot;,
+                message: &quot;the milk&quot;
+            }
+
+        });
+
+    // manuelles Bootsrapping durch domReady Modul
+    require([&#39;domReady!&#39;], function (domReady) {
+        angular.bootstrap(domReady, [&#39;exampleApp&#39;]);
+    });
+
+});</code></pre>
+<p><a href="../Slides/examples/03_modules/angular.html">Demo</a></p>
+<!--
+<a name="Routing"></a>
+## 2.4. Routing
+-->
+
+
 <p><a name="links"></a></p>
 <h2 id="9-links">9. Links</h2>
 <p>Knockout.js: <a href="http://knockoutjs.com">http://knockoutjs.com</a><br>AngularJS: <a href="https://angularjs.org">https://angularjs.org</a><br>MVC: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc</a><br>MVVM: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm</a><br>MVW: <a href="https://plus.google.com/+AngularJS/posts/aZNVhj355G2">https://plus.google.com/+AngularJS/posts/aZNVhj355G2</a><br>Observer Pattern: <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript">http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript</a><br>$watch: <a href="http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/">http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/</a><br>Creating Custom Directives: <a href="https://docs.angularjs.org/guide/directive">https://docs.angularjs.org/guide/directive</a></p>
@@ -245,4 +325,4 @@
 
 </body>
 </html>
-<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
+

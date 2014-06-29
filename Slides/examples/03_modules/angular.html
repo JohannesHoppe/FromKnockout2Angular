@@ -1,13 +1,10 @@
 ﻿<!DOCTYPE html>
-<html ng-app="exampleApp" >
+<html>
 <head>
     <title>NG AMD Example</title>   
-    
     <link href="../style.css" rel="stylesheet" />
-    <script src="../../js/angular-1.3.0/angular.js"></script>
-    <script src="angular.js"></script>
 </head>
-  
+
 <body class="example" ng-controller="exampleController">
 
     <form class="form_example">
@@ -20,6 +17,7 @@
  
     <sticky-note title="{{ model.title }}" message="{{ model.message }}"></sticky-note>
 
-</body>
+    <script data-main="angular.init" src="../../js/require.js"></script>
 
+</body>
 </html>

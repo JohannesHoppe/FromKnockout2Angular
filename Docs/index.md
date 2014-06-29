@@ -197,6 +197,7 @@ In Knockout kann man dies direkt über das `template`-Binding realisieren.
     </div>  
 </script>
 ```
+[Demo](../Slides/examples/02_templating/knockout.html) 
 
 ### Angular
 
@@ -237,6 +238,7 @@ Die Direktive ersetzt alle Elemente welche "sticky-note" heißen und wendet hier
     </div>
 </div>
 ```
+[Demo](../Slides/examples/02_templating/angular.html) 
 
 ### Ist ein Wechsel möglich?
 
@@ -266,6 +268,7 @@ require(['jquery', 'knockout', 'domReady!'], function ($, ko) {
 
 });
 ```
+[Demo](../Slides/examples/03_modules/knockout.html)
 
 Anders als AngularJS übernimmt Knockout aber nie die Führung. Es verseht sich selbst als eines von vielen Modulen einer Applikation und überlässt es dem Entwickler eine mehr oder weniger modulare Archtitektur zu gestalten.
 
@@ -275,21 +278,23 @@ Das AMD-Pattern thematisiert vor allem die Isolation von Code und das Nachladen 
 
 * a) das zurück gelieferte Modul Properties besitzt, die direkt verwendet werden sollen (sich das Modul also wie ein Singleton verhält),  
 * b) es als Funktion aufgerufen werden soll oder
-* c) es sich um eine Konstruktur-Funktion handelt, welche mit dem `new` Schlüsselwort aufgerufen werden soll.  
+* c) es sich um eine z.B. Konstruktur-Funktion handelt, welche mit dem `new` Schlüsselwort aufgerufen werden soll.  
 
-Man kann AMD/Require.js als [Service Locator](http://en.wikipedia.org/wiki/Service_locator_pattern) verstehen. Das Austauschen von Dependencies zu Testzwecken ist zwar möglich (wie [z.B hier](http://bocoup.com/weblog/effective-unit-testing-with-amd/) beschrieben) aber doch ein wenig umständlich. Man kann die Arbeit mit AMD eher als "Dependency Injection"-Light bezeichnen. Schließlich bekommt man nicht immer fertig instanziierte Abhängigkeiten, sondern muss die Module ggf. selbst erst instanziieren. Es fehlen schlicht strikte Vorgaben im AMD-Format, die es erlauben würden, das Modul direkt durch den Modul-Loader instanziieren zu lassen.        
+Man kann AMD/Require.js als puristischen [Service Locator](http://en.wikipedia.org/wiki/Service_locator_pattern) verstehen. Das Austauschen von Dependencies zu Testzwecken ist zwar möglich (wie [z.B hier](http://bocoup.com/weblog/effective-unit-testing-with-amd/) beschrieben) aber doch ein wenig umständlich. Man kann die Arbeit mit AMD eher als "Dependency Injection"-Light bezeichnen. Schließlich bekommt man auch nicht immer fertig instanziierte Abhängigkeiten, sondern muss die Module oder Properties/Teile des Moduls ggf. selbst erst instanziieren. Es fehlen schlicht strikte Vorgaben im AMD-Format, die es erlauben würden, das Modul bzw. Teile des Moduls direkt durch den Modul-Loader instanziieren zu lassen.        
 
 ### Angular
 
 Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl `angular.module()` erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte auf einander treffen:  
 .
-> **require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen und wieder verwendet. Damit ist jedes AMD Modul ein Singleton.  
+> **AMD/require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen und wieder verwendet. Damit ist jedes AMD Modul effektiv ein Singleton.  
 
 .
 
-> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch Module laden. Das fertige Objekt nennt man einen **Service**. Services sind stets Singletons.   
+> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch weitere Module laden. Das fertige Objekt nennt man einen **Service**. Services sind stets Singletons.   
 
-Angular gibt weitaus mehr Vorgaben hinsichtlich der einzuhaltenden Konventionen, so das man hier von echter "Dependency Injecton" - besonders im Sinne der Testbarkeit - sprechen kann. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt, folgende drei Provider erzeugen jeweils einen Service, der eine HelloWorld-Methode besitzt. 
+In AMD erhält man ein Modul. Es gibt keine weiteren Vorgaben. 
+
+Bei Angular erhält man ein Modul, das mehrere **benannte** Services enthalten kann. Durch diese einzuhaltende Konventionen, kann man eine vollwertige "Dependency Injecton" - besonders im Sinne der Testbarkeit - erreichen. Was hierbei der Unterschied der verschiedenen $provide-Methoden (Service, Factory & Provider) ist, wird im [Developer Guide](https://docs.angularjs.org/guide/providers) ausführlich beschrieben. Kurz gesagt, folgende drei Provider erzeugen jeweils einen Service, der eine HelloWorld-Methode besitzt. 
 
 ```js
 angular.module('exampleApp', [])
@@ -320,7 +325,64 @@ angular.module('exampleApp', [])
     })
 ```
 
+Möchte man nun die Funktionalität der Services nutzen, so kann man diesen Service als Funktionsparameter akzeptieren:
 
+```js
+angular.module('exampleApp')
+
+    .controller('exampleController', function ($scope, helloWorldService) {
+        $scope.hello = helloWorldService.sayHello();
+    });
+```
+[Demo](../Slides/examples/03_modules/angular_provider.html)
+
+Vor dem Aufruf des Kontrollers prüft der $injector die Signatur der Funktion (mit .toString()) und "injected" dann den gewünschten Service. Es ist demnacht sehr wichtig, auf die exakte Schreibweise der Funktionsparameter zu achten. Eine vergleichbare komfortable Verwendung kennt AMD nicht.
+
+### Ist ein Wechsel möglich?
+
+Wie sich gezeigt hat, sind AMD-Module und Angular-Module zwei Konzepte, die unterschiedliche Schwerpunkte setzen. Mit ein paar kleinen Anpassungen lassen sich beide Konzepte kombinieren. So kann AMD-Code aus der Knockout-Welt in die Angular-Welt überführt werden. Dies ist dringend empfohlen, denn es sehr unpraktikabel bzw. fehleranfällig synchron und asynchron ausgelegten Code miteinander zu kombinieren. (Man setzt entweder ganz auf AMD oder gar nicht auf AMD!)
+
+Man kann jedoch nicht mehr die `ng-app` Direktive verwenden, da diese im Zuge des [automatischen Bootstrappings](https://docs.angularjs.org/guide/bootstrap) bereits beim Browser-Event [`DOMContentLoaded`](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) ausgewertet wird. Zu diesem Zeitpunkt sind die asynchronen Module aber noch gar nicht geladen.
+
+Daher sollte man das Bootstrapping erst dann starten, wenn require.js alle Module geladen hat. Hierfür bietet sich das Standard-Modul `documentReady` an. Nun ist es ohne Probleme möglich, ein Angular-Modul durch ein AMD-Modul zu umhüllen:
+
+```js
+// AMD Modul
+define(['require', 'angular'], function (require, angular) {
+
+    // Angular Modul
+    angular.module('exampleApp', [])
+
+        .directive('stickyNote', function () {
+            return {
+                restrict: 'E',
+                replace: true,
+                scope: {
+                    title: '@',
+                    message: '@',
+                },
+                templateUrl: 'angular.tmpl.html'
+            }
+        })
+
+        .controller('exampleController', function ($scope) {
+
+            $scope.model = {
+                title: "Remember",
+                message: "the milk"
+            }
+
+        });
+
+    // manuelles Bootsrapping durch domReady Modul
+    require(['domReady!'], function (domReady) {
+        angular.bootstrap(domReady, ['exampleApp']);
+    });
+
+});
+
+```
+[Demo](../Slides/examples/03_modules/angular.html)
 
 <!--
 <a name="Routing"></a>

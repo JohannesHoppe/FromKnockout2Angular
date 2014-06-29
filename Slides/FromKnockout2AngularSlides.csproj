@@ -59,17 +59,15 @@
       <DependentUpon>knockout.html</DependentUpon>
     </Content>
     <Content Include="examples\03_modules\angular.html" />
-    <Content Include="examples\03_modules\angular.js">
+    <Content Include="examples\03_modules\angular.init.js">
       <DependentUpon>angular.html</DependentUpon>
     </Content>
     <Content Include="examples\03_modules\angular.tmpl.html">
       <DependentUpon>angular.html</DependentUpon>
     </Content>
+    <Content Include="examples\03_modules\angular.exampleApp.js" />
     <Content Include="examples\03_modules\angular_provider.js">
       <DependentUpon>angular_provider.html</DependentUpon>
-    </Content>
-    <Content Include="examples\03_modules\angular_short.js">
-      <DependentUpon>angular.html</DependentUpon>
     </Content>
     <Content Include="examples\03_modules\angular_provider.html" />
     <Content Include="examples\03_modules\knockout.html" />
