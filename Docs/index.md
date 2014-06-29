@@ -9,8 +9,8 @@
     2.2. [Templating](#Templating)
     2.3. [Modularer Code](#Modules)
     <!--2.4. [Routing](#Routing)-->
-3. [Fazit](#Fazit)     
-4. [Links](#links)  
+<!--3. [Fazit](#Fazit)-->     
+3. [Links](#links)  
 
 
 <a name="Einleitung"></a>
@@ -402,10 +402,10 @@ define(['require', 'angular'], function (require, angular) {
 ## 2.4. Routing
 -->
 
-
 <a name="links"></a>
 ## 9. Links
 
+<!--
 Knockout.js: http://knockoutjs.com  
 AngularJS: https://angularjs.org
 MVC: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc  
@@ -414,6 +414,7 @@ MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2
 Observer Pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript  
 $watch: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/  
 Creating Custom Directives: https://docs.angularjs.org/guide/directive
+-->
 
 Sie finden dieses Dokument auf: http://johanneshoppe.github.io/FromKnockout2Angular/Docs/
 Alle Demos sind in der Präsentation verlinkt: http://johanneshoppe.github.io/FromKnockout2Angular/Slides/  
