@@ -155,7 +155,20 @@ In AngularJS gestalten sich einfache Szenario recht ähnlich. Erfrischend ist je
 
 In diesem Beispiel finden wir die Direktiven `ng-app`, welche eine Anwendung automatisch bereitstellt ("auto-bootstrap"), `ng-init`, welche Code ausführt (eval) und hier z.B. quick-and-dirty ein Model setzt und `ng-model`, welche den View und das Model per Two-Way-Binding verbindet. 
 
-Es fällt auf, dass das Model keine Observables implementieren muss. Das obrige Beispiel ist ein wenig dirty, "model" ist in wirklichkeit nicht das Model, sondern ein neu erstelltes Property am `$scope`, welcher das eigentlich ViewModel ist. In der Dokumentation von AngularJS wird übrigens nicht zwischen "Model" und "ViewModel" unterschieden. ("typisch" **MVW**)      
+Es fällt auf, dass das Model keine Observables implementieren muss. Hier unterscheidet sich Angular fundamental von Knockout. In der Dokumentation von AngularJS wird übrigens nicht zwischen "Model" und "ViewModel" unterschieden. Man spricht eher vom $scope der Referenzen auf ein oder beliebiges Model hält. (z.B. $scope.model) Dies ist konsequent, da man sonst keine **MVW** sondern eine **MVVM** Anwendung hätte. Man kann aber auch leicht argumentieren das der $scope klar ein ViewModel im Sinne von MVVM ist.
+
+**Best practices:**
+> Das obrige Beispiel ist ein wenig unsauber, das wir (der Kürze wegen) direkt im View den $scope manipulieren. In diesem Fall fügen wir ein neu erstelltes Property "model" an den `$scope` hinzu. Der Scope sollte aber nicht im View verändert werden, dies ist Aufgabe des Controllers. Ein sauberes Beispiel finden sie in der zweiten Demo.      
+
+**Hinweis:**
+In der Welt von Angular besteht keine Regel zum Model. Das Model ist die "Geschäftslogik" der Anwendung, die nicht im Einflussbereich von Angular liegen. Der $scope wird daher auch nicht als "die Geschäftslogik" verstanden. Der Scope hält stets lediglich Referenzen auf das Model, welches aus ein oder mehreren Objekten bestehen kann:
+
+```js
+$scope.referenz1 = { test: 'xxx' };
+$scope.referenz2 = { test: 'xxx' };
+```
+
+Durch diese Verwendung berüchstigen wir die bekannte AngularJS-Empfehlung, das in einem `ng-model` stets einen Punkt `.` verwendet werden muss. (z.B. hier `ng-model="referenz1.test"` So kommt es nicht zu Überraschungen, wenn bei primitiven Typen (wie dem String, dessen Werte kopiert wird) sich bei Two-Way-Bindings scheinbar das Model nicht verändern lässt. (siehe "Scope inheritance" in [Understanding Scopes](https://github.com/angular/angular.js/wiki/Understanding-Scopes)) 
 
 ### Ist ein Wechsel möglich?
 
@@ -270,7 +283,7 @@ require(['jquery', 'knockout', 'domReady!'], function ($, ko) {
 ```
 [Demo](../Slides/examples/03_modules/knockout.html)
 
-Anders als AngularJS übernimmt Knockout aber nie die Führung. Es verseht sich selbst als eines von vielen Modulen einer Applikation und überlässt es dem Entwickler eine mehr oder weniger modulare Archtitektur zu gestalten.
+Anders als AngularJS übernimmt Knockout aber nie die Führung. Es versteht sich selbst als eines von vielen Modulen einer Applikation und überlässt es dem Entwickler eine mehr oder weniger modulare Archtitektur zu gestalten.
 
 ### AMD ist nur ein klein wenig Dependency Injection
 
@@ -286,11 +299,11 @@ Man kann AMD/Require.js als puristischen [Service Locator](http://en.wikipedia.o
 
 Bereits in den vorherigen Beispielen wurde modularer AngularJS-Code verwendet. AngularJS verwendet ein eigenes Modul-Format, bei dem Angular-Module durch den Befehl `angular.module()` erzeugten werden. Man muss darauf achten, dass es hier zwei völlig andere Konzepte auf einander treffen:  
 .
-> **AMD/require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein einmal geladenes Modul wird nicht ein zweites Mal geladen und wieder verwendet. Damit ist jedes AMD Modul effektiv ein Singleton.  
+> **AMD/require.js** regelt das (asynchrone) Laden von JavaScript-Code, welcher im AMD-Format vorliegt. Dies geschieht vor allem einmal zum Start der Anwendung. Ein Modul wird auch bei mehrfacher Verwendung nur einmal geladen. Damit ist jedes AMD Modul effektiv ein Singleton.  
 
 .
 
-> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch weitere Module laden. Das fertige Objekt nennt man einen **Service**. Services sind stets Singletons.   
+> **AngularJS-Module** konfigurieren mithilfe der verschiedenen Methoden des [$provide](https://docs.angularjs.org/api/auto/service/$provide)-service den [$injector](https://docs.angularjs.org/api/auto/service/$injector), welcher zur Laufzeit ein fertiges Objekt zusammenbauen kann. Hierzu kann der $injector Typen instanziieren, Methoden ausführen und auch weitere Module laden. Das fertige Objekt beinhaltet einen oder mehrere **Services**. Services sind stets Singletons.   
 
 In AMD erhält man ein Modul. Es gibt keine weiteren Vorgaben. 
 
@@ -336,7 +349,7 @@ angular.module('exampleApp')
 ```
 [Demo](../Slides/examples/03_modules/angular_provider.html)
 
-Vor dem Aufruf des Kontrollers prüft der $injector die Signatur der Funktion (mit .toString()) und "injected" dann den gewünschten Service. Es ist demnacht sehr wichtig, auf die exakte Schreibweise der Funktionsparameter zu achten. Eine vergleichbare komfortable Verwendung kennt AMD nicht.
+Vor dem Aufruf des Kontrollers prüft der $injector die Signatur der Funktion ("Reflection" per .toString()) und "injected" dann den gewünschten Service. Es ist demnach sehr wichtig, auf die exakte Schreibweise der Funktionsparameter zu achten. Eine vergleichbare komfortable Verwendung kennt AMD nicht.
 
 ### Ist ein Wechsel möglich?
 
