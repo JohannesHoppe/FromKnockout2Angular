@@ -467,11 +467,61 @@ Das größte Problem am vorliegenden Knockout-Beispiel ist die unnötig hohe Kom
 .
 > Man könnte argumentieren, dass **Durandal** (das bekannteste SPA-Framework für KO) die notwendige Standardisierung liefert, aber Durandal wird Zugunsten von AngularJS [nicht mehr weiter entwickelt](http://blog.angularjs.org/2014/04/angular-and-durandal-converge.html)!
 
-Angular setzt hier auf den $routeProvider, welcher die History überwacht und bei Bedarf ein Template lädt und den passenden Controller aufruft. Die Verwendung ist schnell ersichtlich:
+Angular setzt hier auf den $routeProvider, welcher die History überwacht und bei Bedarf ein Template lädt und den passenden Controller aufruft. Die Verwendung ist schnell ersichtlich. Man definiert eine [`ngView`](https://docs.angularjs.org/api/ngRoute/directive/ngView) Direktive 
 
+```html
+<body ng-app="exampleApp" class="example">
+    <div ng-view></div>
+</body>
 ```
-TODO
+
+konfiguriert entsprechend den `$routeProvider`:
+
+
+```javascript
+var hardcodedData = [
+    { id: 1, title: "Remember", message: "the milk" },
+    { id: 2, title: "DWX", message: "one great weak!" },
+    { id: 3, title: "MDC kompakt", message: "one great day!" }
+];
+
+angular.module('exampleApp', ['ngRoute'])
+
+    .config(function($routeProvider) {
+
+        $routeProvider.when('/list', {
+            templateUrl: 'templates/list.html',
+            controller: 'listController'
+        });
+
+        $routeProvider.when('/detail/:id', {
+            templateUrl: 'templates/detail.html',
+            controller: 'detailController'
+        });
+
+        $routeProvider.otherwise({ redirectTo: '/list' });
+    })
+
+    .controller('listController', function ($scope) {
+        $scope.listOfNotes = hardcodedData;
+    })
+
+    .controller('detailController', function ($scope, $routeParams) {
+        var detail = _.find(hardcodedData, function(d) { return d.id == $routeParams.id; });
+        $scope.detail = detail;
+    });
 ```
+
+und definiert eine passendes Listen-Template (templates/list.html):
+
+```html
+<ul>
+    <li ng-repeat="note in listOfNotes">
+        <a href="#/detail/{{ note.id }}">{{ note.title }}</a>
+    </li>
+</ul>
+```
+[Demo](../Slides/examples/04_routing/angular.html)
 
 <a name="fazit"></a>
 ## 3. Fazit

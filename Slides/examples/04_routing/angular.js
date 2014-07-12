@@ -4,10 +4,9 @@
     { id: 3, title: "MDC kompakt", message: "one great day!" }
 ];
 
-
 angular.module('exampleApp', ['ngRoute'])
 
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(function($routeProvider) {
 
         $routeProvider.when('/list', {
             templateUrl: 'templates/list.html',
@@ -20,25 +19,16 @@ angular.module('exampleApp', ['ngRoute'])
         });
 
         $routeProvider.otherwise({ redirectTo: '/list' });
-    }])
-
+    })
 
     .controller('listController', function ($scope) {
         $scope.listOfNotes = hardcodedData;
-        console.log($scope);
     })
 
     .controller('detailController', function ($scope, $routeParams) {
-
-        var detail = _.find(hardcodedData, function(data) {
-            return data.id == $routeParams.id;
-        });
-
+        var detail = _.find(hardcodedData, function(d) { return d.id == $routeParams.id; });
         $scope.detail = detail;
-
-        console.log($scope);
     })
-
 
     .directive('stickyNote', function () {
         return {
