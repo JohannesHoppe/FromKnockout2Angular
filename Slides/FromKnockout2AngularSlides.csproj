@@ -83,6 +83,13 @@
     <Content Include="examples\03_modules\knockout.init.js">
       <DependentUpon>knockout.html</DependentUpon>
     </Content>
+    <Content Include="examples\04_routing\angular.html" />
+    <Content Include="examples\04_routing\angular.js">
+      <DependentUpon>angular.html</DependentUpon>
+    </Content>
+    <Content Include="examples\04_routing\templates\detail.html" />
+    <Content Include="examples\04_routing\templates\list.html" />
+    <Content Include="js\underscore.js" />
     <Content Include="examples\fonts\BuxtonSketch.css" />
     <Content Include="examples\01_bindings\knockout.html" />
     <Content Include="examples\01_bindings\jQuery.html" />

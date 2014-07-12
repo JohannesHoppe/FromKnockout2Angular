@@ -8,9 +8,9 @@
     2.1. [Bindings](#Bindings)
     2.2. [Templating](#Templating)
     2.3. [Modularer Code](#Modules)
-    <!--2.4. [Routing](#Routing)-->
-<!--3. [Fazit](#Fazit)-->     
-3. [Downloads & Links](#links)  
+    2.4. [Routing](#Routing)
+3. [Fazit](#fazit)
+4. [Downloads & Links](#links)  
 
 
 <a name="Einleitung"></a>
@@ -32,7 +32,7 @@ Unter der Prämisse, das wir uns im Kontext einer **MVW** Anwendung bewegen, ist
 1. Bindings
 2. Templating
 3. Modularer Code
-<!--4. Routing-->
+4. Routing
 
 ![Äpfel mit Birnen](images/apples_and_pears.png)
 
@@ -397,13 +397,91 @@ define(['require', 'angular'], function (require, angular) {
 ```
 [Demo](../Slides/examples/03_modules/angular.html)
 
-<!--
 <a name="Routing"></a>
 ## 2.4. Routing
--->
+
+### Knockout
+
+Es fehlt noch ein Prinzip, welches für eine SPA unerlässlich ist: **Client-side Routing**.  
+"Routing" bedeutet, dass die Anwendung zwischen Ansichten wechseln kann und dabei die Browser-History aktualisiert. Es wird dadurch möglich, den "Zurück"- und "Vor"-Button des Browser wie gewohnt zu verwenden. Ebenso sollte das Routing sicherstellen, dass man zu eine beliebigen Ansicht springen kann, indem man die entsprechende URL im Browser aufruft. Ist das Routing gut implementiert, ist für den Anwender nicht mehr ersichtlich, ob es sich um eine "klassische" Anwendung mit mehreren HTML-Seiten oder eine SPA handelt (wobei natürlich die Vorteile von Single-Page, wie z.B. schnelle Ladezeiten erhalten bleiben sollten).
+
+Knockout bietet kein Routing von Haus aus an. Es bietet sich an, entweder auf [Durandal](http://durandaljs.com/) zu setzen oder das Prinzip mit einem der vielen zur Verfügung stehenden Routing-Libraries selbst zu implementieren. Es bieten sich z.B. [Sammy.js](http://sammyjs.org/), [FinchJS](http://stoodder.github.io/finchjs/) oder [Director](https://github.com/flatiron/director) an.
+
+Wie ein solides Routing mit Knockout selbst implementiert werden kann, ist Bestandteil folgender Dokumentation.
+
+* [WDC Kompakt 2013 - SPA Workshop - Part 3: Knockout Basics](https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/Documentation/03.%20SPA.md)  
+* [WDC Kompakt 2013 - SPA Workshop - Part 4: Knockout Bindings und Formularverarbeitung](https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/Documentation/04.%20SPA.md)  
+* [WDC Kompakt 2013 - SPA Workshop - Part 5: SPA Architektur mit Knockout (inkl. Routing)](https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/Documentation/05.%20SPA.md)  
+(Quelltext als [Download](https://github.com/JohannesHoppe/SinglePageWorkshop/archive/master.zip))
+
+Es läuft darauf hinaus, das man ein Modul entwickelt, welches den State hält (hier die Datei "appState.js" mit Sammy.js) und damit das Routing kapselt. Diese Routing-Datei kann dann eine weiteres Modul instruieren, je nach Route einen View und ein Viewmodel zu laden und diese mit Knockout auszuführen. Jenes Modul heißt hier schlicht ["app"](https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/WebNote/WebNote/Scripts/singlePage/app.js), man könnte diese Modul auch "controller" nennen. So sieht diese zentrale Routing-Datei im vorliegenden Beispiel aus:
+
+
+```javascript
+// singlePage/appState.js
+define(['singlePage/app',
+        'jquery',
+        'sammy'], function (app, $, sammy) {
+
+    var sammyApp;
+
+    var init = function() {
+
+        // Client-side routes    
+        sammyApp = sammy(function () {
+
+            this.get('#/', function () {
+                app.loadView('index');                             
+            });
+
+            this.get('#:viewId/:param', function () {
+                app.loadView(this.params.viewId, this.params.param);
+            });
+
+            this.notFound = function() {
+                app.loadView('page404');
+            };
+
+        }).run('#/');
+    };
+
+    var changeState = function (newViewId, newParam) {
+
+        var newLocation = !newParam ? "#" + newViewId :
+                                      "#" + newViewId + "/" + newParam;
+        sammyApp.setLocation(newLocation);
+    };
+
+    return {
+        init: init,
+        changeState: changeState
+    };
+});
+```
+(siehe [appState.js](https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/WebNote/WebNote/Scripts/singlePage/appState.js))
+
+### Angular
+
+Das größte Problem am vorliegenden Knockout-Beispiel ist die unnötig hohe Komplexität und fehlende Standardisierung. Es wäre viel vorteilhafter, wenn das vorhandene MVVM-Framework bereits alle notwendigen Funktionalitäten anbietet. Genau dies bietet AngularJS. 
+
+.
+> Man könnte argumentieren, dass **Durandal** (das bekannteste SPA-Framework für KO) die notwendige Standardisierung liefert, aber Durandal wird Zugunsten von AngularJS [nicht mehr weiter entwickelt](http://blog.angularjs.org/2014/04/angular-and-durandal-converge.html)!
+
+Angular setzt hier auf den $routeProvider, welcher die History überwacht und bei Bedarf ein Template lädt und den passenden Controller aufruft. Die Verwendung ist schnell ersichtlich:
+
+```
+TODO
+```
+
+<a name="fazit"></a>
+## 3. Fazit
+
+Ein Fazit fällt schwer. Es ist offensichtlich, dass Knockout allein sehr wenig Funktionsumfang bietet. Doch es ist durchaus möglich, das Sie bereits eine exzellente Architektur mit Knockout als MVVM-Engine besitzen. In diesem Fall sollte man bei Knockout bleiben, denn Knockout wird stetig [weiter entwickelt und gepflegt](https://github.com/knockout/knockout/releases/). Von einem "Upgrade" auf Durandal würde ich seit Neuestem abraten, da Aufgrund der [Konvergenz von Durandal und AngularJS](http://blog.angularjs.org/2014/04/angular-and-durandal-converge.html) keine neuen Innovationen bei Durandal zu erwarten sind. 
+
+Sollten Sie keine exzellente Architektur besitzen ("historisch gewachsen"), dann bietet es sich an auf AngularJS zu wechseln. Die Macher von AngularJS haben viele architektonischen Entscheidungen bereits für Sie gefällt. Durch die modulare Architektur und die gute Testbarkeit wird die neue Erzeugung von "schlechtem Code" hinreichend vermieden!
 
 <a name="links"></a>
-## 3. Downloads & Links
+## 4. Downloads & Links
 
 Sie finden dieses Dokument auf: http://bit.ly/Ko2NgDocs <!-- http://johanneshoppe.github.io/FromKnockout2Angular/Docs/ -->  
 Die Präsentation finden Sie hier: http://bit.ly/Ko2NgSlides <!-- http://johanneshoppe.github.io/FromKnockout2Angular/Slides/ -->  
