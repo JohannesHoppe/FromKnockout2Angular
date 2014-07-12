@@ -10,7 +10,7 @@
     2.3. [Modularer Code](#Modules)
     <!--2.4. [Routing](#Routing)-->
 <!--3. [Fazit](#Fazit)-->     
-3. [Links](#links)  
+3. [Downloads & Links](#links)  
 
 
 <a name="Einleitung"></a>
@@ -403,22 +403,14 @@ define(['require', 'angular'], function (require, angular) {
 -->
 
 <a name="links"></a>
-## 9. Links
+## 3. Downloads & Links
 
-<!--
-Knockout.js: http://knockoutjs.com  
-AngularJS: https://angularjs.org
-MVC: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvc  
-MVVM: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvvm  
-MVW: https://plus.google.com/+AngularJS/posts/aZNVhj355G2  
-Observer Pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript  
-$watch: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/  
-Creating Custom Directives: https://docs.angularjs.org/guide/directive
--->
+Sie finden dieses Dokument auf: http://bit.ly/Ko2NgDocs <!-- http://johanneshoppe.github.io/FromKnockout2Angular/Docs/ -->  
+Die Präsentation finden Sie hier: http://bit.ly/Ko2NgSlides <!-- http://johanneshoppe.github.io/FromKnockout2Angular/Slides/ -->  
 
-Sie finden dieses Dokument auf: http://johanneshoppe.github.io/FromKnockout2Angular/Docs/
-Alle Demos sind in der Präsentation verlinkt: http://johanneshoppe.github.io/FromKnockout2Angular/Slides/  
-
+Die Beispiele sind in voller Länge auf Github verfügbar:
+https://github.com/JohannesHoppe/FromKnockout2Angular
+(Ordner: /Slides/examples/)
 
 <hr>
 
