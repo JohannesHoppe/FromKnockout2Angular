@@ -18,7 +18,8 @@
 <h5 id="table-of-contents">Table of Contents</h5>
 <ol>
 <li><a href="#Einleitung">Einleitung</a>  </li>
-<li><a href="#Schwerpunkte">Schwerpunkte</a><br> 2.1. <a href="#Bindings">Bindings</a><br> 2.2. <a href="#Templating">Templating</a><br> 2.3. <a href="#Modules">Modularer Code</a> <!--2.4. [Routing](#Routing)--><br><!--3. [Fazit](#Fazit)-->     </li>
+<li><a href="#Schwerpunkte">Schwerpunkte</a><br> 2.1. <a href="#Bindings">Bindings</a><br> 2.2. <a href="#Templating">Templating</a><br> 2.3. <a href="#Modules">Modularer Code</a><br> 2.4. <a href="#Routing">Routing</a></li>
+<li><a href="#fazit">Fazit</a></li>
 <li><a href="#links">Downloads &amp; Links</a>  </li>
 </ol>
 <p><a name="Einleitung"></a></p>
@@ -33,9 +34,8 @@
 <ol>
 <li>Bindings</li>
 <li>Templating</li>
-<li>Modularer Code<!--4. Routing-->
-
-</li>
+<li>Modularer Code</li>
+<li>Routing</li>
 </ol>
 <p><img src="images/apples_and_pears.png" alt="Äpfel mit Birnen"></p>
 <p>Es bleibt ein kleines Dilemma. Knockout.js und AngularJS sind eigentlich nicht miteinander vergleichbar. Wie Äpfel und Birnen haben beide Frameworks einen unterschiedlichen Schwerpunkt. AngularJS hat den Anspruch ein universales JavaScript-Framework für SPAs zu sein, Knockout hingegeben beschränkt sich hingegen darauf, eine MVVM Engine zur Verfügung zu stellen. Für einen fairen Vergleich lönnte man z.B. eher <a href="http://durandaljs.com/">Durandal</a> und AngularJS miteinander messen.   </p>
@@ -316,13 +316,113 @@ define([&#39;require&#39;, &#39;angular&#39;], function (require, angular) {
 
 });</code></pre>
 <p><a href="../Slides/examples/03_modules/angular.html">Demo</a></p>
-<!--
-<a name="Routing"></a>
-## 2.4. Routing
--->
+<p><a name="Routing"></a></p>
+<h2 id="2-4-routing">2.4. Routing</h2>
+<h3 id="knockout">Knockout</h3>
+<p>Es fehlt noch ein Prinzip, welches für eine SPA unerlässlich ist: <strong>Client-side Routing</strong>.<br>&quot;Routing&quot; bedeutet, dass die Anwendung zwischen Ansichten wechseln kann und dabei die Browser-History aktualisiert. Es wird dadurch möglich, den &quot;Zurück&quot;- und &quot;Vor&quot;-Button des Browser wie gewohnt zu verwenden. Ebenso sollte das Routing sicherstellen, dass man zu eine beliebigen Ansicht springen kann, indem man die entsprechende URL im Browser aufruft. Ist das Routing gut implementiert, ist für den Anwender nicht mehr ersichtlich, ob es sich um eine &quot;klassische&quot; Anwendung mit mehreren HTML-Seiten oder eine SPA handelt (wobei natürlich die Vorteile von Single-Page, wie z.B. schnelle Ladezeiten erhalten bleiben sollten).</p>
+<p>Knockout bietet kein Routing von Haus aus an. Es bietet sich an, entweder auf <a href="http://durandaljs.com/">Durandal</a> zu setzen oder das Prinzip mit einem der vielen zur Verfügung stehenden Routing-Libraries selbst zu implementieren. Es bieten sich z.B. <a href="http://sammyjs.org/">Sammy.js</a>, <a href="http://stoodder.github.io/finchjs/">FinchJS</a> oder <a href="https://github.com/flatiron/director">Director</a> an.</p>
+<p>Wie ein solides Routing mit Knockout selbst implementiert werden kann, ist Bestandteil folgender Dokumentation.</p>
+<ul>
+<li><a href="https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/Documentation/03.%20SPA.md">WDC Kompakt 2013 - SPA Workshop - Part 3: Knockout Basics</a>  </li>
+<li><a href="https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/Documentation/04.%20SPA.md">WDC Kompakt 2013 - SPA Workshop - Part 4: Knockout Bindings und Formularverarbeitung</a>  </li>
+<li><a href="https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/Documentation/05.%20SPA.md">WDC Kompakt 2013 - SPA Workshop - Part 5: SPA Architektur mit Knockout (inkl. Routing)</a><br>(Quelltext als <a href="https://github.com/JohannesHoppe/SinglePageWorkshop/archive/master.zip">Download</a>)</li>
+</ul>
+<p>Es läuft darauf hinaus, das man ein Modul entwickelt, welches den State hält (hier die Datei &quot;appState.js&quot; mit Sammy.js) und damit das Routing kapselt. Diese Routing-Datei kann dann eine weiteres Modul instruieren, je nach Route einen View und ein Viewmodel zu laden und diese mit Knockout auszuführen. Jenes Modul heißt hier schlicht <a href="https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/WebNote/WebNote/Scripts/singlePage/app.js">&quot;app&quot;</a>, man könnte diese Modul auch &quot;controller&quot; nennen. So sieht diese zentrale Routing-Datei im vorliegenden Beispiel aus:</p>
+<pre><code class="lang-javascript">// singlePage/appState.js
+define([&#39;singlePage/app&#39;,
+        &#39;jquery&#39;,
+        &#39;sammy&#39;], function (app, $, sammy) {
 
+    var sammyApp;
+
+    var init = function() {
+
+        // Client-side routes    
+        sammyApp = sammy(function () {
+
+            this.get(&#39;#/&#39;, function () {
+                app.loadView(&#39;index&#39;);                             
+            });
+
+            this.get(&#39;#:viewId/:param&#39;, function () {
+                app.loadView(this.params.viewId, this.params.param);
+            });
+
+            this.notFound = function() {
+                app.loadView(&#39;page404&#39;);
+            };
+
+        }).run(&#39;#/&#39;);
+    };
+
+    var changeState = function (newViewId, newParam) {
+
+        var newLocation = !newParam ? &quot;#&quot; + newViewId :
+                                      &quot;#&quot; + newViewId + &quot;/&quot; + newParam;
+        sammyApp.setLocation(newLocation);
+    };
+
+    return {
+        init: init,
+        changeState: changeState
+    };
+});</code></pre>
+<p>(siehe <a href="https://github.com/JohannesHoppe/SinglePageWorkshop/blob/master/WebNote/WebNote/Scripts/singlePage/appState.js">appState.js</a>)</p>
+<h3 id="angular">Angular</h3>
+<p>Das größte Problem am vorliegenden Knockout-Beispiel ist die unnötig hohe Komplexität und fehlende Standardisierung. Es wäre viel vorteilhafter, wenn das vorhandene MVVM-Framework bereits alle notwendigen Funktionalitäten anbietet. Genau dies bietet AngularJS. </p>
+<p>.</p>
+<blockquote>
+<p>Man könnte argumentieren, dass <strong>Durandal</strong> (das bekannteste SPA-Framework für KO) die notwendige Standardisierung liefert, aber Durandal wird Zugunsten von AngularJS <a href="http://blog.angularjs.org/2014/04/angular-and-durandal-converge.html">nicht mehr weiter entwickelt</a>!</p>
+</blockquote>
+<p>Angular setzt hier auf den $routeProvider, welcher die History überwacht und bei Bedarf ein Template lädt und den passenden Controller aufruft. Die Verwendung ist schnell ersichtlich. Man definiert eine <a href="https://docs.angularjs.org/api/ngRoute/directive/ngView"><code>ngView</code></a> Direktive </p>
+<pre><code class="lang-html">&lt;body ng-app=&quot;exampleApp&quot; class=&quot;example&quot;&gt;
+    &lt;div ng-view&gt;&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+<p>konfiguriert entsprechend den <code>$routeProvider</code>:</p>
+<pre><code class="lang-javascript">var hardcodedData = [
+    { id: 1, title: &quot;Remember&quot;, message: &quot;the milk&quot; },
+    { id: 2, title: &quot;DWX&quot;, message: &quot;one great weak!&quot; },
+    { id: 3, title: &quot;MDC kompakt&quot;, message: &quot;one great day!&quot; }
+];
+
+angular.module(&#39;exampleApp&#39;, [&#39;ngRoute&#39;])
+
+    .config(function($routeProvider) {
+
+        $routeProvider.when(&#39;/list&#39;, {
+            templateUrl: &#39;templates/list.html&#39;,
+            controller: &#39;listController&#39;
+        });
+
+        $routeProvider.when(&#39;/detail/:id&#39;, {
+            templateUrl: &#39;templates/detail.html&#39;,
+            controller: &#39;detailController&#39;
+        });
+
+        $routeProvider.otherwise({ redirectTo: &#39;/list&#39; });
+    })
+
+    .controller(&#39;listController&#39;, function ($scope) {
+        $scope.listOfNotes = hardcodedData;
+    })
+
+    .controller(&#39;detailController&#39;, function ($scope, $routeParams) {
+        var detail = _.find(hardcodedData, function(d) { return d.id == $routeParams.id; });
+        $scope.detail = detail;
+    });</code></pre>
+<p>und definiert eine passendes Listen-Template (templates/list.html):</p>
+<pre><code class="lang-html">&lt;ul&gt;
+    &lt;li ng-repeat=&quot;note in listOfNotes&quot;&gt;
+        &lt;a href=&quot;#/detail/{{ note.id }}&quot;&gt;{{ note.title }}&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p><a href="../Slides/examples/04_routing/angular.html">Demo</a></p>
+<p><a name="fazit"></a></p>
+<h2 id="3-fazit">3. Fazit</h2>
+<p>Ein Fazit fällt schwer. Es ist offensichtlich, dass Knockout allein sehr wenig Funktionsumfang bietet. Doch es ist durchaus möglich, das Sie bereits eine exzellente Architektur mit Knockout als MVVM-Engine besitzen. In diesem Fall sollte man bei Knockout bleiben, denn Knockout wird stetig <a href="https://github.com/knockout/knockout/releases/">weiter entwickelt und gepflegt</a>. Von einem &quot;Upgrade&quot; auf Durandal würde ich seit Neuestem abraten, da Aufgrund der <a href="http://blog.angularjs.org/2014/04/angular-and-durandal-converge.html">Konvergenz von Durandal und AngularJS</a> keine neuen Innovationen bei Durandal zu erwarten sind. </p>
+<p>Sollten Sie keine exzellente Architektur besitzen (&quot;historisch gewachsen&quot;), dann bietet es sich an auf AngularJS zu wechseln. Die Macher von AngularJS haben viele architektonischen Entscheidungen bereits für Sie gefällt. Durch die modulare Architektur und die gute Testbarkeit wird die neue Erzeugung von &quot;schlechtem Code&quot; hinreichend vermieden!</p>
 <p><a name="links"></a></p>
-<h2 id="3-downloads-links">3. Downloads &amp; Links</h2>
+<h2 id="4-downloads-links">4. Downloads &amp; Links</h2>
 <p>Sie finden dieses Dokument auf: <a href="http://bit.ly/Ko2NgDocs">http://bit.ly/Ko2NgDocs</a> <!-- http://johanneshoppe.github.io/FromKnockout2Angular/Docs/ --><br>Die Präsentation finden Sie hier: <a href="http://bit.ly/Ko2NgSlides">http://bit.ly/Ko2NgSlides</a> <!-- http://johanneshoppe.github.io/FromKnockout2Angular/Slides/ -->  </p>
 <p>Die Beispiele sind in voller Länge auf Github verfügbar:<br><a href="https://github.com/JohannesHoppe/FromKnockout2Angular">https://github.com/JohannesHoppe/FromKnockout2Angular</a><br>(Ordner: /Slides/examples/)</p>
 <hr>
