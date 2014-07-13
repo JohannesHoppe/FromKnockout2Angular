@@ -39,41 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="examples\01_bindings\angular.html" />
-    <Content Include="examples\01_bindings\angular2.html" />
-    <Content Include="examples\01_bindings\angular2.js">
-      <DependentUpon>angular2.html</DependentUpon>
-    </Content>
-    <Content Include="examples\02_templating\angular.html" />
-    <Content Include="examples\02_templating\angular.js">
-      <DependentUpon>angular.html</DependentUpon>
-    </Content>
-    <Content Include="examples\02_templating\angular.tmpl.html">
-      <DependentUpon>angular.html</DependentUpon>
-    </Content>
-    <Content Include="examples\02_templating\angular_short.js">
-      <DependentUpon>angular.html</DependentUpon>
-    </Content>
+    <Content Include="examples\00_live_coding\knockout.html" />
     <Content Include="examples\02_templating\knockout.html" />
     <Content Include="examples\02_templating\knockout.js">
       <DependentUpon>knockout.html</DependentUpon>
-    </Content>
-    <Content Include="examples\03_modules\angular.html" />
-    <Content Include="examples\03_modules\angular.init.js">
-      <DependentUpon>angular.html</DependentUpon>
-    </Content>
-    <Content Include="examples\03_modules\angular.tmpl.html">
-      <DependentUpon>angular.html</DependentUpon>
-    </Content>
-    <Content Include="examples\03_modules\angular.exampleApp.js">
-      <DependentUpon>angular.html</DependentUpon>
-    </Content>
-    <Content Include="examples\03_modules\angular_provider.html" />
-    <Content Include="examples\03_modules\angular_provider.js">
-      <DependentUpon>angular_provider.html</DependentUpon>
-    </Content>
-    <Content Include="examples\03_modules\angular_provider_short.js">
-      <DependentUpon>angular_provider.html</DependentUpon>
     </Content>
     <Content Include="examples\03_modules\knockout.html" />
     <Content Include="examples\03_modules\knockout.viewModel.js">

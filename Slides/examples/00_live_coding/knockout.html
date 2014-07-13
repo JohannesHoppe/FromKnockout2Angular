@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>KO Form Example</title>   
+    
+    <link href="../style.css" rel="stylesheet" />
+    <script src="../../js/jquery/jquery-1.11.1.js"></script>
+    <script src="../../js/knockout-3.1.0/knockout.debug.js"></script>
+
+</head>
+<body class="example">
+         
+    <script>
+        $(function () {
+
+            var ViewModel = function () {
+                this.title = ko.observable('Remember');
+                this.message = ko.observable('the milk');
+            };
+
+            var viewmodel = new ViewModel();
+            ko.applyBindings(viewmodel);
+
+        });
+    </script>
+
+    <form class="form_example">
+        <label for="title">Title</label>
+        <input id="title" data-bind="value: title">    
+        
+        <label for="message">Message</label>
+        <input id="message" data-bind="value: message">
+    </form>
+         
+    <div class="sticky_note">
+        <div>
+            <h1 data-bind="text: title"></h1>
+            <p data-bind="text: message"></p>
+        </div>
+    </div>
+
+</body>
+</html>
